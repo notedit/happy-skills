@@ -5,7 +5,7 @@ argument-hint: Optional feature description
 
 # Feature Development
 
-You are helping a developer implement a new feature. Follow a systematic approach: understand the codebase deeply, identify and ask about all underspecified details, design elegant architectures, then implement.
+You are helping a developer implement a new feature. Follow a systematic approach: understand the codebase deeply, identify and ask about all underspecified details, design elegant architectures, implement, test thoroughly, then review.
 
 ## Core Principles
 
@@ -13,6 +13,7 @@ You are helping a developer implement a new feature. Follow a systematic approac
 - **Understand before acting**: Read and comprehend existing code patterns first
 - **Read files identified by agents**: When launching agents, ask them to return lists of the most important files to read. After agents complete, read those files to build detailed context before proceeding.
 - **Simple and elegant**: Prioritize readable, maintainable, architecturally sound code
+- **Test thoroughly**: Ensure all new code has appropriate test coverage
 - **Use TodoWrite**: Track all progress throughout
 
 ---
@@ -98,7 +99,46 @@ If the user says "whatever you think is best", provide your recommendation and g
 
 ---
 
-## Phase 6: Quality Review
+## Phase 6: Automated Testing
+
+**Goal**: Ensure comprehensive test coverage and all tests pass
+
+**Actions**:
+1. **Generate Tests**: Launch 2 test-generator agents in parallel with different focuses:
+   - Unit tests: Focus on individual functions, edge cases, error handling
+   - Integration tests: Focus on component interactions, data flow, API contracts
+
+   Each agent should analyze the new code and provide:
+   - Test cases with full implementation code
+   - Priority ranking (critical/important/nice-to-have)
+   - Required mocks and fixtures
+
+2. **Review Generated Tests**:
+   - Consolidate test recommendations from both agents
+   - Prioritize critical tests that must be implemented
+   - Present test plan to user for approval
+
+3. **Implement Tests**:
+   - Write the approved test cases following project conventions
+   - Set up required mocks and test fixtures
+   - Ensure tests are well-organized and maintainable
+
+4. **Run Tests**: Launch test-runner agent to:
+   - Execute the full test suite (or relevant subset)
+   - Analyze any failures with root cause diagnosis
+   - Provide specific fixes for failing tests
+
+5. **Fix and Iterate**:
+   - If tests fail due to implementation bugs, fix the implementation
+   - If tests fail due to test issues, fix the tests
+   - Re-run tests until all pass
+   - **Do not proceed to Quality Review until all tests pass**
+
+6. **Report Coverage**: Summarize test coverage achieved and any gaps
+
+---
+
+## Phase 7: Quality Review
 
 **Goal**: Ensure code is simple, DRY, elegant, easy to read, and functionally correct
 
@@ -107,10 +147,11 @@ If the user says "whatever you think is best", provide your recommendation and g
 2. Consolidate findings and identify highest severity issues that you recommend fixing
 3. **Present findings to user and ask what they want to do** (fix now, fix later, or proceed as-is)
 4. Address issues based on user decision
+5. If significant changes were made, re-run tests using test-runner agent to ensure nothing broke
 
 ---
 
-## Phase 7: Summary
+## Phase 8: Summary
 
 **Goal**: Document what was accomplished
 
@@ -120,6 +161,7 @@ If the user says "whatever you think is best", provide your recommendation and g
    - What was built
    - Key decisions made
    - Files modified
+   - Test coverage achieved
    - Suggested next steps
 
 ---
