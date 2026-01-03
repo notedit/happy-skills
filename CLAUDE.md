@@ -1,5 +1,9 @@
 # Happy Coding Agent
 
+## Rules
+
+- When updating commands, agents, or skills, always sync changes to README.md
+
 ## Skills
 
 ### /feature-analyzer
