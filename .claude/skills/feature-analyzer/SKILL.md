@@ -81,7 +81,7 @@ After presenting the design, generate an implementation task list using markdown
 - Order tasks by dependency (foundations first)
 - Use clear, action-oriented titles ("Create X", "Implement Y", "Add Z")
 - Each task should be completable independently
-- Include test files alongside implementation files
+- Include test tasks for each major component
 - Phases: `model` → `api` → `ui` → `test` → `docs`
 
 ### Execution Handoff
