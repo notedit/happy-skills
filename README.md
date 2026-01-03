@@ -8,7 +8,7 @@ A collection of Claude Code skills, commands, and agents for rapid product devel
 |---------|-------------|
 | `/feature-analyzer` | Turn ideas into fully formed designs and specs through collaborative dialogue |
 | `/feature-pipeline` | Execute implementation tasks from design documents using markdown checkboxes |
-| `/analyze-screenshot` | Analyze product screenshots to extract features and generate task lists |
+| `/screenshot-analyzer` | Analyze product screenshots to extract features and generate task lists |
 | `/feature-dev` | Guided feature development with codebase understanding and architecture focus |
 
 ## Agents
@@ -56,7 +56,7 @@ A collection of Claude Code skills, commands, and agents for rapid product devel
 ├── commands/                            # Slash commands
 │   ├── feature-analyzer.md
 │   ├── feature-pipeline.md
-│   ├── analyze-screenshot.md
+│   ├── screenshot-analyzer.md
 │   └── feature-dev.md
 └── skills/                              # Reusable skills
     ├── feature-analyzer/
@@ -67,7 +67,7 @@ A collection of Claude Code skills, commands, and agents for rapid product devel
 
 ## Screenshot Analysis Architecture
 
-The `/analyze-screenshot` command uses a multi-agent pipeline for comprehensive analysis:
+The `/screenshot-analyzer` command uses a multi-agent pipeline for comprehensive analysis:
 
 ```
                     ┌─────────────────┐
