@@ -6,11 +6,19 @@ import os
 import shutil
 import tempfile
 from datetime import datetime
+from enum import Enum
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Tuple
 
 from .config import CLAUDE_DIR, COMPONENTS, METADATA_DIR, METADATA_FILE
 from .git_ops import GitOps
+
+
+class DeployMode(Enum):
+    """Deployment mode for handling existing files."""
+
+    OVERWRITE = "overwrite"  # Remove existing and replace completely
+    MERGE = "merge"  # Merge with existing, preserving user additions
 
 
 class Deployer:
@@ -52,12 +60,18 @@ class Deployer:
 
         return self._manifest
 
-    def deploy(self, target_dir: Path, components: List[str]) -> Dict:
+    def deploy(
+        self,
+        target_dir: Path,
+        components: List[str],
+        mode: DeployMode = DeployMode.OVERWRITE,
+    ) -> Dict:
         """Deploy selected components to target directory.
 
         Args:
             target_dir: Target project directory
             components: List of components to deploy
+            mode: Deployment mode (OVERWRITE or MERGE)
 
         Returns:
             Deployment result dictionary
@@ -72,6 +86,8 @@ class Deployer:
             "components": {},
             "version": self._get_version(),
             "commit": self.git_ops.get_commit_hash(self._temp_dir),
+            "mode": mode.value,
+            "merge_stats": {},
         }
 
         # Deploy each component
@@ -80,12 +96,21 @@ class Deployer:
             dst = target_claude / component
 
             if src.exists():
-                if dst.exists():
-                    shutil.rmtree(dst)
-                shutil.copytree(src, dst)
+                if mode == DeployMode.MERGE and dst.exists():
+                    merge_result = self._merge_component(src, dst, component)
+                    result["components"][component] = {
+                        "success": True,
+                        "count": merge_result["total_files"],
+                    }
+                    result["merge_stats"][component] = merge_result
+                else:
+                    # Standard overwrite mode
+                    if dst.exists():
+                        shutil.rmtree(dst)
+                    shutil.copytree(src, dst)
 
-                count = len([f for f in dst.rglob("*") if f.is_file()])
-                result["components"][component] = {"success": True, "count": count}
+                    count = len([f for f in dst.rglob("*") if f.is_file()])
+                    result["components"][component] = {"success": True, "count": count}
             else:
                 result["components"][component] = {
                     "success": False,
@@ -100,6 +125,99 @@ class Deployer:
         self._cleanup()
 
         return result
+
+    def _merge_component(
+        self, src: Path, dst: Path, component: str
+    ) -> Dict:
+        """Merge source component with existing destination.
+
+        This preserves user-added files/directories while updating
+        files that exist in the source.
+
+        Args:
+            src: Source component directory
+            dst: Destination component directory
+            component: Component name (agents, commands, skills)
+
+        Returns:
+            Merge statistics dictionary
+        """
+        stats = {
+            "updated": [],
+            "added": [],
+            "preserved": [],
+            "total_files": 0,
+        }
+
+        # Get all items in source and destination
+        src_items = set(item.name for item in src.iterdir())
+        dst_items = set(item.name for item in dst.iterdir())
+
+        # Items only in destination (user additions) - preserve them
+        user_additions = dst_items - src_items
+        stats["preserved"] = list(user_additions)
+
+        # Items in both - update them
+        common_items = src_items & dst_items
+        for item_name in common_items:
+            src_item = src / item_name
+            dst_item = dst / item_name
+
+            if src_item.is_dir():
+                # For directories (like skills), recursively merge
+                self._merge_directory(src_item, dst_item, stats)
+            else:
+                # For files, overwrite with source
+                shutil.copy2(src_item, dst_item)
+                stats["updated"].append(item_name)
+
+        # Items only in source - add them
+        new_items = src_items - dst_items
+        for item_name in new_items:
+            src_item = src / item_name
+            dst_item = dst / item_name
+
+            if src_item.is_dir():
+                shutil.copytree(src_item, dst_item)
+            else:
+                shutil.copy2(src_item, dst_item)
+            stats["added"].append(item_name)
+
+        # Count total files
+        stats["total_files"] = len([f for f in dst.rglob("*") if f.is_file()])
+
+        return stats
+
+    def _merge_directory(self, src: Path, dst: Path, stats: Dict) -> None:
+        """Recursively merge source directory into destination.
+
+        Args:
+            src: Source directory
+            dst: Destination directory
+            stats: Statistics dictionary to update
+        """
+        src_items = set(item.name for item in src.iterdir())
+        dst_items = set(item.name for item in dst.iterdir()) if dst.exists() else set()
+
+        # Process common items
+        for item_name in src_items & dst_items:
+            src_item = src / item_name
+            dst_item = dst / item_name
+
+            if src_item.is_dir() and dst_item.is_dir():
+                self._merge_directory(src_item, dst_item, stats)
+            elif src_item.is_file():
+                shutil.copy2(src_item, dst_item)
+
+        # Add new items from source
+        for item_name in src_items - dst_items:
+            src_item = src / item_name
+            dst_item = dst / item_name
+
+            if src_item.is_dir():
+                shutil.copytree(src_item, dst_item)
+            else:
+                shutil.copy2(src_item, dst_item)
 
     def _get_source_claude_dir(self) -> Path:
         """Get path to source .claude directory.
