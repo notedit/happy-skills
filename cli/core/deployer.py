@@ -219,24 +219,35 @@ class Deployer:
             else:
                 shutil.copy2(src_item, dst_item)
 
-    def _get_source_claude_dir(self) -> Path:
-        """Get path to source .claude directory.
+    def _get_source_dir(self) -> Path:
+        """Get path to source directory containing components.
+
+        In official plugin format, components (agents/, commands/, skills/)
+        are at the root level, not under .claude/.
 
         Returns:
-            Path to the source .claude directory
+            Path to the source directory (root of plugin)
         """
         if self._temp_dir:
-            return Path(self._temp_dir) / CLAUDE_DIR
+            return Path(self._temp_dir)
 
         # Check if source is a local path
         if os.path.isdir(self.source):
-            return Path(self.source) / CLAUDE_DIR
+            return Path(self.source)
 
         # Clone remote repository
         self._temp_dir = tempfile.mkdtemp(prefix="hca_")
         self.git_ops.clone(self.source, self._temp_dir, self.branch, depth=1)
 
-        return Path(self._temp_dir) / CLAUDE_DIR
+        return Path(self._temp_dir)
+
+    def _get_source_claude_dir(self) -> Path:
+        """Get path to source directory (for backwards compatibility).
+
+        Returns:
+            Path to the source directory
+        """
+        return self._get_source_dir()
 
     def _write_metadata(
         self, claude_dir: Path, result: Dict, components: List[str]
