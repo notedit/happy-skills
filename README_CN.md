@@ -1,13 +1,13 @@
 # Happy Coding Agent
 
-[中文](./README.md) | **English**
+**中文** | [English](./README.md)
 
-**Describe requirements in natural language, auto-generate design docs and implement code step by step.** Automate the complete development flow: Idea → Design → Code → Commit.
+**用自然语言描述需求，自动生成设计文档并逐步实现代码。** 把"想法→设计→代码→提交"的完整开发流程自动化。
 
 ## Installation
 
 ```bash
-# Install directly in Claude Code
+# 在 Claude Code 中直接安装
 /plugin install https://github.com/notedit/happy-coding-agent
 ```
 
@@ -23,40 +23,40 @@ cd your-project && hca init
 ### 1. Feature Development (Design → Execute)
 
 ```bash
-# Step 1: Design - Generate design doc through Q&A dialogue
-/feature-analyzer user login with OAuth2 support
+# Step 1: 设计 - Q&A 对话生成设计文档
+/feature-analyzer 用户登录功能，支持 OAuth2
 
-# Step 2: Execute - Implement tasks from design doc
+# Step 2: 执行 - 按文档逐项实现
 /feature-pipeline docs/features/user-login.md
 ```
 
 ### 2. Quick Development
 
 ```bash
-/feature-dev add dark mode toggle
+/feature-dev 添加深色模式切换
 ```
 
 ### 3. Git Operations
 
 ```bash
-/git:branch user-login       # Create branch (supports Chinese input)
-/git:changes                 # View changes
-/git:commit                  # Auto-generate commit message
-/git:pr                      # One-click PR creation
+/git:branch 用户登录      # 创建分支（支持中文）
+/git:changes             # 查看更改（中文描述）
+/git:commit              # 自动生成 commit message
+/git:pr                  # 一键创建 PR
 ```
 
 ### 4. Worktree Parallel Development
 
 ```bash
-/git:worktree-add feature/api   # Create worktree + copy .env
-/git:worktree-merge             # Merge back to current branch
-/git:worktree-remove            # Cleanup worktree
+/git:worktree-add feature/api   # 创建 worktree + 复制 .env
+/git:worktree-merge             # 合并回当前分支
+/git:worktree-remove            # 清理 worktree
 ```
 
 ### 5. Screenshot Analysis
 
 ```bash
-/screenshot-analyzer ./app.png  # Extract features from screenshot
+/screenshot-analyzer ./app.png  # 从截图提取功能生成任务
 ```
 
 ## Commands Reference
