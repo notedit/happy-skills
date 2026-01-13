@@ -1,20 +1,20 @@
 # Happy Coding Agent
 
-[中文](./README_CN.md) | **English**
+**中文** | [English](./README.md)
 
-**Describe requirements in natural language, auto-generate design docs and implement code step by step.** Automate the complete development flow: Idea → Design → Code → Commit.
+**用自然语言描述需求，自动生成设计文档并逐步实现代码。** 把"想法→设计→代码→提交"的完整开发流程自动化。
 
 ## Installation
 
 ```bash
-# Install directly in Claude Code
-/plugin install https://github.com/notedit/happy-coding-agent
+# 在 Claude Code 中直接安装
+/plugin install https://github.com/belkov0912/happy-coding-agent.git
 ```
 
 ### Alternative: CLI Tool
 
 ```bash
-pip install git+https://github.com/notedit/happy-coding-agent.git
+pip install git+https://github.com/belkov0912/happy-coding-agent.git
 cd your-project && hca init
 ```
 
@@ -23,40 +23,40 @@ cd your-project && hca init
 ### 1. Feature Development (Design → Execute)
 
 ```bash
-# Step 1: Design - Generate design doc through Q&A dialogue
-/feature-analyzer user login with OAuth2 support
+# Step 1: 设计 - Q&A 对话生成设计文档
+/feature-analyzer 用户登录功能，支持 OAuth2
 
-# Step 2: Execute - Implement tasks from design doc
+# Step 2: 执行 - 按文档逐项实现
 /feature-pipeline docs/features/user-login.md
 ```
 
 ### 2. Quick Development
 
 ```bash
-/feature-dev add dark mode toggle
+/feature-dev 添加深色模式切换
 ```
 
 ### 3. Git Operations
 
 ```bash
-/git:branch user-login       # Create branch (supports Chinese input)
-/git:changes                 # View changes
-/git:commit                  # Auto-generate commit message
-/git:pr                      # One-click PR creation
+/git:branch 用户登录      # 创建分支（支持中文）
+/git:changes             # 查看更改（中文描述）
+/git:commit              # 自动生成 commit message
+/git:pr                  # 一键创建 PR
 ```
 
 ### 4. Worktree Parallel Development
 
 ```bash
-/git:worktree-add feature/api   # Create worktree + copy .env
-/git:worktree-merge             # Merge back to current branch
-/git:worktree-remove            # Cleanup worktree
+/git:worktree-add feature/api   # 创建 worktree + 复制 .env
+/git:worktree-merge             # 合并回当前分支
+/git:worktree-remove            # 清理 worktree
 ```
 
 ### 5. Screenshot Analysis
 
 ```bash
-/screenshot-analyzer ./app.png  # Extract features from screenshot
+/screenshot-analyzer ./app.png  # 从截图提取功能生成任务
 ```
 
 ## Commands Reference
@@ -95,27 +95,27 @@ cd your-project && hca init
 
 ### Agents
 
-#### Code Analysis
-| Agent | Description |
-|-------|-------------|
-| `code-explorer` | Analyze codebase by tracing execution paths and mapping architecture |
-| `code-architect` | Design feature architectures based on existing patterns |
-| `code-reviewer` | Review code for bugs, security vulnerabilities, and quality issues |
+#### 代码分析
+| Agent | 描述 |
+|-------|------|
+| `code-explorer` | 通过追踪执行路径和映射架构来分析代码库 |
+| `code-architect` | 基于现有模式设计功能架构 |
+| `code-reviewer` | 审查代码中的 bug、安全漏洞和质量问题 |
 
-#### Screenshot Analysis (Multi-Agent Pipeline)
-| Agent | Description |
-|-------|-------------|
-| `screenshot-ui-analyzer` | Analyze visual components, layout structure, and design patterns |
-| `screenshot-interaction-analyzer` | Analyze user interaction flows and state transitions |
-| `screenshot-business-analyzer` | Extract business logic and data entities |
-| `screenshot-synthesizer` | Synthesize analysis results into unified feature list |
-| `screenshot-reviewer` | Review task lists for completeness and quality |
+#### 截图分析（多 Agent 流水线）
+| Agent | 描述 |
+|-------|------|
+| `screenshot-ui-analyzer` | 分析视觉组件、布局结构和设计模式 |
+| `screenshot-interaction-analyzer` | 分析用户交互流程和状态转换 |
+| `screenshot-business-analyzer` | 提取业务逻辑和数据实体 |
+| `screenshot-synthesizer` | 将分析结果综合为统一的功能列表 |
+| `screenshot-reviewer` | 审查任务列表的完整性和质量 |
 
-#### Testing
-| Agent | Description |
-|-------|-------------|
-| `test-generator` | Generate comprehensive test cases based on existing patterns |
-| `test-runner` | Execute tests, diagnose failures, and provide fixes |
+#### 测试
+| Agent | 描述 |
+|-------|------|
+| `test-generator` | 基于现有模式生成全面的测试用例 |
+| `test-runner` | 执行测试、诊断失败并提供修复方案 |
 
 ## Project Structure
 
