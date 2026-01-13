@@ -2,10 +2,10 @@
 set -e
 
 # Happy Coding Agent CLI Installer
-# Usage: curl -fsSL https://raw.githubusercontent.com/notedit/happy-coding-agent/main/install.sh | bash
+# Usage: curl -fsSL https://raw.githubusercontent.com/belkov0912/happy-coding-agent/main/install.sh | bash
 
 HCA_VERSION="1.0.0"
-HCA_REPO="https://github.com/notedit/happy-coding-agent"
+HCA_REPO="https://github.com/belkov0912/happy-coding-agent"
 INSTALL_DIR="${HOME}/.local/bin"
 
 echo "========================================"

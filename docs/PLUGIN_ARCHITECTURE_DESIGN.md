@@ -10,14 +10,14 @@
 
 ```bash
 # 方式1: 从 GitHub 直接安装
-/plugin install https://github.com/notedit/happy-coding-agent
+/plugin install https://github.com/belkov0912/happy-coding-agent
 
 # 方式2: 从 Marketplace 安装 (需先注册)
 /plugin install happy-coding-agent@claude-plugin-directory
 
 # 方式3: 从自定义 Marketplace 安装
-/plugin marketplace add notedit/plugins
-/plugin install happy-coding-agent@notedit
+/plugin marketplace add belkov0912/plugins
+/plugin install happy-coding-agent@belkov0912
 
 # 方式4: 本地路径安装
 /plugin install ./path/to/happy-coding-agent
@@ -117,15 +117,15 @@ happy-coding-agent/
   "version": "1.0.0",
   "description": "A collection of Claude Code skills, commands, and agents for rapid product development",
   "author": {
-    "name": "notedit",
-    "url": "https://github.com/notedit"
+    "name": "belkov0912",
+    "url": "https://github.com/belkov0912"
   },
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/notedit/happy-coding-agent"
+    "url": "https://github.com/belkov0912/happy-coding-agent"
   },
-  "homepage": "https://github.com/notedit/happy-coding-agent",
+  "homepage": "https://github.com/belkov0912/happy-coding-agent",
 
   "claude_code": {
     "min_version": "1.0.0"
@@ -195,8 +195,8 @@ happy-coding-agent/
   },
 
   "support": {
-    "documentation": "https://github.com/notedit/happy-coding-agent#readme",
-    "issues": "https://github.com/notedit/happy-coding-agent/issues",
+    "documentation": "https://github.com/belkov0912/happy-coding-agent#readme",
+    "issues": "https://github.com/belkov0912/happy-coding-agent/issues",
     "email": "support@example.com"
   },
 
@@ -217,7 +217,7 @@ happy-coding-agent/
     "sources": [
       {
         "type": "github",
-        "url": "https://github.com/notedit/happy-coding-agent"
+        "url": "https://github.com/belkov0912/happy-coding-agent"
       }
     ],
     "auto_install": true
@@ -225,8 +225,8 @@ happy-coding-agent/
 
   "marketplaces": [
     {
-      "name": "notedit",
-      "url": "https://github.com/notedit/plugins"
+      "name": "belkov0912",
+      "url": "https://github.com/belkov0912/plugins"
     }
   ]
 }
@@ -405,11 +405,11 @@ cat > .claude-plugin/plugin.json << 'EOF'
   "name": "happy-coding-agent",
   "version": "1.0.0",
   "description": "A collection of Claude Code skills, commands, and agents for rapid product development",
-  "author": { "name": "notedit" },
+  "author": { "name": "belkov0912" },
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/notedit/happy-coding-agent"
+    "url": "https://github.com/belkov0912/happy-coding-agent"
   },
   "claude_code": { "min_version": "1.0.0" },
   "components": {
@@ -475,13 +475,13 @@ happy-coding-agent/
 
 ```json
 {
-  "name": "notedit-plugins",
-  "description": "Notedit's Claude Code Plugin Collection",
+  "name": "belkov0912-plugins",
+  "description": "Belkov0912's Claude Code Plugin Collection",
   "plugins": [
     {
       "name": "happy-coding-agent",
       "version": "1.0.0",
-      "source": "https://github.com/notedit/happy-coding-agent",
+      "source": "https://github.com/belkov0912/happy-coding-agent",
       "description": "Rapid product development workflows"
     }
   ]
@@ -521,7 +521,7 @@ hca install        # 手动部署到项目
 
 ```bash
 # 1. 安装插件
-/plugin install https://github.com/notedit/happy-coding-agent
+/plugin install https://github.com/belkov0912/happy-coding-agent
 
 # 2. 使用斜杠命令
 /feature-analyzer 实现用户登录功能
@@ -542,7 +542,7 @@ hca install        # 手动部署到项目
 {
   "plugins": {
     "sources": [
-      { "type": "github", "url": "https://github.com/notedit/happy-coding-agent" }
+      { "type": "github", "url": "https://github.com/belkov0912/happy-coding-agent" }
     ]
   }
 }

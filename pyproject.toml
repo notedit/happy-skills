@@ -10,7 +10,7 @@ readme = "README.md"
 license = "MIT"
 requires-python = ">=3.8"
 authors = [
-    { name = "notedit" }
+    { name = "belkov0912" }
 ]
 keywords = ["claude", "ai", "cli", "development", "agent"]
 classifiers = [
@@ -40,8 +40,8 @@ dev = [
 hca = "cli.main:main"
 
 [project.urls]
-Homepage = "https://github.com/notedit/happy-coding-agent"
-Repository = "https://github.com/notedit/happy-coding-agent"
+Homepage = "https://github.com/belkov0912/happy-coding-agent"
+Repository = "https://github.com/belkov0912/happy-coding-agent"
 
 [tool.hatch.build.targets.wheel]
 packages = ["cli"]
