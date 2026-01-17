@@ -1,61 +1,8 @@
 {
   "name": "happy-coding-agent",
-  "version": "1.0.0",
-  "description": "A collection of Claude Code skills, commands, and agents for rapid product development",
+  "description": "Natural language to design docs and code - automate the full dev workflow from idea to commit",
   "author": {
     "name": "notedit",
-    "url": "https://github.com/notedit"
-  },
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/notedit/happy-coding-agent"
-  },
-  "homepage": "https://github.com/notedit/happy-coding-agent",
-
-  "claude_code": {
-    "min_version": "1.0.0"
-  },
-
-  "components": {
-    "skills": [
-      "feature-design-assistant",
-      "task-execution-engine",
-      "screenshot-feature-extractor",
-      "skill-creation-guide"
-    ],
-    "commands": [
-      "feature-analyzer",
-      "feature-pipeline",
-      "feature-dev",
-      "screenshot-analyzer"
-    ],
-    "agents": [
-      "code-architect",
-      "code-explorer",
-      "code-reviewer",
-      "screenshot-ui-analyzer",
-      "screenshot-interaction-analyzer",
-      "screenshot-business-analyzer",
-      "screenshot-synthesizer",
-      "screenshot-reviewer",
-      "test-generator",
-      "test-runner"
-    ]
-  },
-
-  "keywords": [
-    "development",
-    "productivity",
-    "code-review",
-    "architecture",
-    "feature-design",
-    "testing"
-  ],
-
-  "categories": [
-    "Development Tools",
-    "Productivity",
-    "Code Quality"
-  ]
+    "email": "notedit@gmail.com"
+  }
 }
