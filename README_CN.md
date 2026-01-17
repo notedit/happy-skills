@@ -11,7 +11,7 @@
 /plugin marketplace add notedit/happy-coding-agent
 
 # 第二步：安装插件
-/plugin install happy-coding-agent@happy-coding-agent
+/plugin install hc@happy-coding-agent
 ```
 
 ### 备选方案：CLI 工具

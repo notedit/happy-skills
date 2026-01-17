@@ -8,7 +8,7 @@
   },
   "plugins": [
     {
-      "name": "happy-coding-agent",
+      "name": "hc",
       "description": "Natural language to design docs and code - automate the full dev workflow",
       "version": "1.0.0",
       "author": {

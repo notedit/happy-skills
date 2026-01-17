@@ -11,7 +11,7 @@
 /plugin marketplace add notedit/happy-coding-agent
 
 # Step 2: Install the plugin
-/plugin install happy-coding-agent@happy-coding-agent
+/plugin install hc@happy-coding-agent
 ```
 
 ### Alternative: CLI Tool
