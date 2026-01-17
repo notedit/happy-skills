@@ -15,10 +15,7 @@
         "name": "notedit",
         "email": "notedit@gmail.com"
       },
-      "source": {
-        "source": "github",
-        "repo": "notedit/happy-coding-agent"
-      },
+      "source": "./",
       "category": "development"
     }
   ]
