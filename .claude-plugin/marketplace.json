@@ -1,0 +1,16 @@
+{
+  "name": "happy-coding-agent",
+  "description": "A collection of Claude Code skills, commands, and agents for rapid product development",
+  "owner": {
+    "name": "notedit",
+    "url": "https://github.com/notedit"
+  },
+  "plugins": [
+    {
+      "name": "happy-coding-agent",
+      "source": ".",
+      "description": "Natural language to design docs and code - automate the full dev workflow",
+      "version": "1.0.0"
+    }
+  ]
+}
