@@ -49,13 +49,14 @@
 happy-skills/
 ├── .claude-plugin/plugin.json   # Plugin manifest
 ├── commands/                    # Slash commands
-│   ├── feature-dev.md           # Quick development
 │   └── git/                     # Git commands (8)
 ├── skills/                      # Skills (direct invocation)
+│   ├── feature-dev/             # Guided feature development
 │   ├── feature-analyzer/        # Design doc generation
 │   ├── feature-pipeline/        # Task execution engine
 │   ├── screenshot-analyzer/     # Screenshot analysis
-│   └── skill-creation-guide/    # Skill creation guide
+│   ├── skill-creation-guide/    # Skill creation guide
+│   └── tts-skill/               # MiniMax TTS API
 ├── agents/                      # Sub-agents
 └── docs/                        # Documentation
 ```
@@ -65,4 +66,4 @@ happy-skills/
 - When updating commands, agents, or skills, sync to both `README.md` and `README_CN.md`
 - Always update both README files together to keep them in sync
 - Use AskUserQuestion for structured information gathering in skills
-- Skills can be called directly: `/feature-analyzer`, `/feature-pipeline`, `/screenshot-analyzer`
+- Skills can be called directly: `/feature-dev`, `/feature-analyzer`, `/feature-pipeline`, `/screenshot-analyzer`, `/tts-skill`

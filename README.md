@@ -6,6 +6,18 @@
 
 ## Installation
 
+### Option 1: Using npx skills add (Recommended)
+
+```bash
+# Install to current project
+npx skills add notedit/happy-skills
+
+# Or install globally
+npx skills add notedit/happy-skills -g
+```
+
+### Option 2: Using Claude Code Plugin System
+
 ```bash
 # Step 1: Add the marketplace
 /plugin marketplace add notedit/happy-skills
@@ -17,10 +29,7 @@
 ### Verify Installation
 
 ```bash
-# Open plugin manager to confirm
-/plugin
-
-# Test a command
+# Test a skill
 /feature-dev add a simple feature
 ```
 
@@ -70,12 +79,6 @@
 
 ## Commands Reference
 
-### Feature Commands
-
-| Command | Description |
-|---------|-------------|
-| `/feature-dev` | Quick feature development |
-
 ### Git Commands
 
 | Command | Description |
@@ -95,10 +98,12 @@
 
 | Skill | Description |
 |-------|-------------|
+| `feature-dev` | Guided feature development with codebase understanding and architecture focus |
 | `feature-analyzer` | Turn ideas into designs through Q&A dialogue |
 | `feature-pipeline` | Execute tasks from design documents |
 | `screenshot-analyzer` | Extract features from UI screenshots |
 | `skill-creation-guide` | Guide for creating new skills |
+| `tts-skill` | MiniMax TTS API - text-to-speech, voice clone, voice design |
 
 ### Agents
 
@@ -130,7 +135,6 @@
 happy-skills/
 ├── .claude-plugin/plugin.json   # Plugin manifest
 ├── commands/                    # Slash commands
-│   ├── feature-dev.md
 │   └── git/                     # Git commands
 ├── skills/                      # Skills
 ├── agents/                      # Sub-agents

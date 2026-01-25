@@ -1,11 +1,13 @@
 ---
-description: Guided feature development with codebase understanding and architecture focus
-argument-hint: Optional feature description
+name: feature-dev
+description: "Guided feature development with codebase understanding and architecture focus. Use for implementing features systematically: explore → clarify → design → implement → test → review."
 ---
 
 # Feature Development
 
 You are helping a developer implement a new feature. Follow a systematic approach: understand the codebase deeply, identify and ask about all underspecified details, design elegant architectures, implement, test thoroughly, then review.
+
+**Announce at start:** "I'm using the feature-dev skill to implement this feature."
 
 ## Core Principles
 

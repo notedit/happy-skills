@@ -6,6 +6,18 @@
 
 ## 安装
 
+### 方式一：使用 npx skills add（推荐）
+
+```bash
+# 安装到当前项目
+npx skills add notedit/happy-skills
+
+# 或全局安装
+npx skills add notedit/happy-skills -g
+```
+
+### 方式二：使用 Claude Code 插件系统
+
 ```bash
 # 第一步：添加 marketplace
 /plugin marketplace add notedit/happy-skills
@@ -17,10 +29,7 @@
 ### 验证安装
 
 ```bash
-# 打开插件管理器确认
-/plugin
-
-# 测试命令
+# 测试 skill
 /feature-dev 添加一个简单功能
 ```
 
@@ -70,12 +79,6 @@
 
 ## Commands Reference
 
-### Feature Commands
-
-| Command | Description |
-|---------|-------------|
-| `/feature-dev` | Quick feature development |
-
 ### Git Commands
 
 | Command | Description |
@@ -95,10 +98,12 @@
 
 | Skill | Description |
 |-------|-------------|
+| `feature-dev` | 引导式功能开发，深入理解代码库并专注架构设计 |
 | `feature-analyzer` | Turn ideas into designs through Q&A dialogue |
 | `feature-pipeline` | Execute tasks from design documents |
 | `screenshot-analyzer` | Extract features from UI screenshots |
 | `skill-creation-guide` | Guide for creating new skills |
+| `tts-skill` | MiniMax TTS API - 文本转语音、声音克隆、声音设计 |
 
 ### Agents
 
@@ -130,7 +135,6 @@
 happy-skills/
 ├── .claude-plugin/plugin.json   # Plugin manifest
 ├── commands/                    # Slash commands
-│   ├── feature-dev.md
 │   └── git/                     # Git commands
 ├── skills/                      # Skills
 ├── agents/                      # Sub-agents
