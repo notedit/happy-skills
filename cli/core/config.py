@@ -3,7 +3,7 @@
 from pathlib import Path
 
 # Default source repository
-DEFAULT_SOURCE = "https://github.com/notedit/happy-coding-agent"
+DEFAULT_SOURCE = "https://github.com/notedit/happy-skills"
 DEFAULT_BRANCH = "main"
 
 # Metadata directory and file names

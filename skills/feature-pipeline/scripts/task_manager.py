@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Markdown-based task manager for task-execution-engine.
+"""Markdown-based task manager for feature-pipeline.
 
 Manages tasks directly in markdown files using checkbox syntax:
 - [ ] uncompleted task

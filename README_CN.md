@@ -1,4 +1,4 @@
-# Happy Coding Agent
+# Happy Skills
 
 **中文** | [English](./README.md)
 
@@ -8,16 +8,16 @@
 
 ```bash
 # 第一步：添加 marketplace
-/plugin marketplace add notedit/happy-coding-agent
+/plugin marketplace add notedit/happy-skills
 
 # 第二步：安装插件
-/plugin install hc@happy-coding-agent
+/plugin install hc@happy-skills
 ```
 
 ### 备选方案：CLI 工具
 
 ```bash
-pip install git+https://github.com/notedit/happy-coding-agent.git
+pip install git+https://github.com/notedit/happy-skills.git
 cd your-project && hca init
 ```
 
@@ -81,10 +81,7 @@ cd your-project && hca init
 
 | Command | Description |
 |---------|-------------|
-| `/feature-analyzer` | Turn ideas into designs through Q&A dialogue |
-| `/feature-pipeline` | Execute tasks from design documents (checkboxes) |
 | `/feature-dev` | Quick feature development |
-| `/screenshot-analyzer` | Extract features from UI screenshots |
 
 ### Git Commands
 
@@ -105,9 +102,9 @@ cd your-project && hca init
 
 | Skill | Description |
 |-------|-------------|
-| `feature-design-assistant` | Feature design through Q&A |
-| `task-execution-engine` | Execute tasks from design docs |
-| `screenshot-feature-extractor` | Extract features from screenshots |
+| `feature-analyzer` | Turn ideas into designs through Q&A dialogue |
+| `feature-pipeline` | Execute tasks from design documents |
+| `screenshot-analyzer` | Extract features from UI screenshots |
 | `skill-creation-guide` | Guide for creating new skills |
 
 ### Agents
@@ -137,7 +134,7 @@ cd your-project && hca init
 ## Project Structure
 
 ```
-happy-coding-agent/
+happy-skills/
 ├── .claude-plugin/plugin.json   # Plugin manifest
 ├── commands/                    # Slash commands
 │   ├── feature-*.md

@@ -1,1 +1,1 @@
-"""CLI commands for Happy Coding Agent."""
+"""CLI commands for Happy Skills."""

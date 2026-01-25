@@ -1,1 +1,1 @@
-"""Core modules for Happy Coding Agent CLI."""
+"""Core modules for Happy Skills CLI."""

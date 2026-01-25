@@ -1,6 +1,6 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
-  "name": "happy-coding-agent",
+  "name": "happy-skills",
   "description": "A collection of Claude Code skills, commands, and agents for rapid product development",
   "owner": {
     "name": "notedit",

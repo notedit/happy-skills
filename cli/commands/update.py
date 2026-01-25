@@ -55,7 +55,7 @@ def update_cmd(
     source: Optional[str],
     branch: Optional[str],
 ) -> None:
-    """Update deployed Happy Coding Agent configurations.
+    """Update deployed Happy Skills configurations.
 
     COMPONENT: Optional specific component to update (e.g., 'agents', 'skills')
     """

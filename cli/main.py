@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Happy Coding Agent CLI - Deploy .claude configurations to any git project.
+Happy Skills CLI - Deploy .claude configurations to any git project.
 
 Usage:
     hca init          Initialize .claude in current project
@@ -19,7 +19,7 @@ from cli.commands import init, status, update
 @click.option("--verbose", "-v", is_flag=True, help="Enable verbose output")
 @click.pass_context
 def cli(ctx: click.Context, verbose: bool) -> None:
-    """Happy Coding Agent - Deploy Claude configurations to your project."""
+    """Happy Skills - Deploy Claude configurations to your project."""
     ctx.ensure_object(dict)
     ctx.obj["verbose"] = verbose
 

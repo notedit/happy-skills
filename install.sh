@@ -1,15 +1,15 @@
 #!/bin/bash
 set -e
 
-# Happy Coding Agent CLI Installer
-# Usage: curl -fsSL https://raw.githubusercontent.com/notedit/happy-coding-agent/main/install.sh | bash
+# Happy Skills CLI Installer
+# Usage: curl -fsSL https://raw.githubusercontent.com/notedit/happy-skills/main/install.sh | bash
 
 HCA_VERSION="1.0.0"
-HCA_REPO="https://github.com/notedit/happy-coding-agent"
+HCA_REPO="https://github.com/notedit/happy-skills"
 INSTALL_DIR="${HOME}/.local/bin"
 
 echo "========================================"
-echo " Happy Coding Agent CLI Installer"
+echo " Happy Skills CLI Installer"
 echo " Version: ${HCA_VERSION}"
 echo "========================================"
 echo ""

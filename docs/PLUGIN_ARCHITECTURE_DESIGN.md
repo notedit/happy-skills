@@ -2,7 +2,7 @@
 
 ## 一、概述
 
-本文档为 `happy-coding-agent` 项目提供一个标准化的 Claude Code 插件组织方案。该方案**严格遵循 Claude Code 官方插件规范**，支持官方安装命令和 Marketplace 分发。
+本文档为 `happy-skills` 项目提供一个标准化的 Claude Code 插件组织方案。该方案**严格遵循 Claude Code 官方插件规范**，支持官方安装命令和 Marketplace 分发。
 
 ## 二、官方安装方式
 
@@ -10,17 +10,17 @@
 
 ```bash
 # 方式1: 从 GitHub 直接安装
-/plugin install https://github.com/notedit/happy-coding-agent
+/plugin install https://github.com/notedit/happy-skills
 
 # 方式2: 从 Marketplace 安装 (需先注册)
-/plugin install happy-coding-agent@claude-plugin-directory
+/plugin install happy-skills@claude-plugin-directory
 
 # 方式3: 从自定义 Marketplace 安装
 /plugin marketplace add notedit/plugins
-/plugin install happy-coding-agent@notedit
+/plugin install happy-skills@notedit
 
 # 方式4: 本地路径安装
-/plugin install ./path/to/happy-coding-agent
+/plugin install ./path/to/happy-skills
 
 # 方式5: 可视化安装
 /plugin  → 选择 "Discover" 浏览和安装
@@ -39,7 +39,7 @@
 ### 3.1 完整目录结构
 
 ```
-happy-coding-agent/
+happy-skills/
 │
 ├── 📄 README.md                      # 项目说明 (Marketplace 展示)
 ├── 📄 LICENSE                        # 开源许可证
@@ -49,16 +49,16 @@ happy-coding-agent/
 │   └── 📄 marketplace.json           # [可选] Marketplace 发布配置
 │
 ├── 📁 skills/                        # [核心] 技能目录
-│   ├── 📁 feature-design-assistant/
+│   ├── 📁 feature-analyzer/
 │   │   ├── 📄 SKILL.md               # 技能主文件 (必需)
 │   │   ├── 📁 references/            # 参考文档
 │   │   ├── 📁 scripts/               # 可执行脚本
 │   │   └── 📁 assets/                # 资产文件
 │   │
-│   ├── 📁 task-execution-engine/
+│   ├── 📁 feature-pipeline/
 │   │   └── ...
 │   │
-│   ├── 📁 screenshot-feature-extractor/
+│   ├── 📁 screenshot-analyzer/
 │   │   └── ...
 │   │
 │   └── 📁 skill-creation-guide/
@@ -113,7 +113,7 @@ happy-coding-agent/
 
 ```json
 {
-  "name": "happy-coding-agent",
+  "name": "happy-skills",
   "version": "1.0.0",
   "description": "A collection of Claude Code skills, commands, and agents for rapid product development",
   "author": {
@@ -123,9 +123,9 @@ happy-coding-agent/
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/notedit/happy-coding-agent"
+    "url": "https://github.com/notedit/happy-skills"
   },
-  "homepage": "https://github.com/notedit/happy-coding-agent",
+  "homepage": "https://github.com/notedit/happy-skills",
 
   "claude_code": {
     "min_version": "1.0.0"
@@ -133,9 +133,9 @@ happy-coding-agent/
 
   "components": {
     "skills": [
-      "feature-design-assistant",
-      "task-execution-engine",
-      "screenshot-feature-extractor",
+      "feature-analyzer",
+      "feature-pipeline",
+      "screenshot-analyzer",
       "skill-creation-guide"
     ],
     "commands": [
@@ -180,7 +180,7 @@ happy-coding-agent/
 ```json
 {
   "listing": {
-    "title": "Happy Coding Agent",
+    "title": "Happy Skills",
     "tagline": "Rapid product development with AI-powered workflows",
     "description": "A comprehensive collection of skills, commands, and agents that accelerate software development through intelligent automation.",
     "icon": "assets/icon.png",
@@ -195,8 +195,8 @@ happy-coding-agent/
   },
 
   "support": {
-    "documentation": "https://github.com/notedit/happy-coding-agent#readme",
-    "issues": "https://github.com/notedit/happy-coding-agent/issues",
+    "documentation": "https://github.com/notedit/happy-skills#readme",
+    "issues": "https://github.com/notedit/happy-skills/issues",
     "email": "support@example.com"
   },
 
@@ -217,7 +217,7 @@ happy-coding-agent/
     "sources": [
       {
         "type": "github",
-        "url": "https://github.com/notedit/happy-coding-agent"
+        "url": "https://github.com/notedit/happy-skills"
       }
     ],
     "auto_install": true
@@ -238,7 +238,7 @@ happy-coding-agent/
 
 ```yaml
 ---
-name: feature-design-assistant
+name: feature-analyzer
 description: |
   Feature design through incremental Q&A and validation.
   Use when: (1) Planning new features, (2) Designing architecture,
@@ -402,18 +402,18 @@ mv .claude/skills ./skills
 # Step 3: 创建 plugin.json
 cat > .claude-plugin/plugin.json << 'EOF'
 {
-  "name": "happy-coding-agent",
+  "name": "happy-skills",
   "version": "1.0.0",
   "description": "A collection of Claude Code skills, commands, and agents for rapid product development",
   "author": { "name": "notedit" },
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/notedit/happy-coding-agent"
+    "url": "https://github.com/notedit/happy-skills"
   },
   "claude_code": { "min_version": "1.0.0" },
   "components": {
-    "skills": ["feature-design-assistant", "task-execution-engine", "screenshot-feature-extractor", "skill-creation-guide"],
+    "skills": ["feature-analyzer", "feature-pipeline", "screenshot-analyzer", "skill-creation-guide"],
     "commands": ["feature-analyzer", "feature-pipeline", "feature-dev", "screenshot-analyzer"],
     "agents": ["code-architect", "code-explorer", "code-reviewer", "screenshot-ui-analyzer", "screenshot-interaction-analyzer", "screenshot-business-analyzer", "screenshot-synthesizer", "screenshot-reviewer", "test-generator", "test-runner"]
   },
@@ -432,7 +432,7 @@ EOF
 为了同时支持官方安装和 `hca` CLI 安装：
 
 ```
-happy-coding-agent/
+happy-skills/
 │
 ├── .claude-plugin/          # 官方插件格式
 │   └── plugin.json
@@ -467,7 +467,7 @@ happy-coding-agent/
 # my-marketplace/
 # ├── index.json
 # └── plugins/
-#     └── happy-coding-agent/
+#     └── happy-skills/
 #         └── plugin.json
 ```
 
@@ -479,9 +479,9 @@ happy-coding-agent/
   "description": "Notedit's Claude Code Plugin Collection",
   "plugins": [
     {
-      "name": "happy-coding-agent",
+      "name": "happy-skills",
       "version": "1.0.0",
-      "source": "https://github.com/notedit/happy-coding-agent",
+      "source": "https://github.com/notedit/happy-skills",
       "description": "Rapid product development workflows"
     }
   ]
@@ -521,7 +521,7 @@ hca install        # 手动部署到项目
 
 ```bash
 # 1. 安装插件
-/plugin install https://github.com/notedit/happy-coding-agent
+/plugin install https://github.com/notedit/happy-skills
 
 # 2. 使用斜杠命令
 /feature-analyzer 实现用户登录功能
@@ -542,7 +542,7 @@ hca install        # 手动部署到项目
 {
   "plugins": {
     "sources": [
-      { "type": "github", "url": "https://github.com/notedit/happy-coding-agent" }
+      { "type": "github", "url": "https://github.com/notedit/happy-skills" }
     ]
   }
 }

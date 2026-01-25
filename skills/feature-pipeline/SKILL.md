@@ -1,6 +1,6 @@
 ---
-name: task-execution-engine
-description: Execute implementation tasks from design documents using markdown checkboxes. Use when (1) implementing features from feature-design-assistant output, (2) resuming interrupted work, (3) batch executing tasks. Triggers on 'start implementation', 'run tasks', 'resume'.
+name: feature-pipeline
+description: Execute implementation tasks from design documents using markdown checkboxes. Use when (1) implementing features from feature-analyzer output, (2) resuming interrupted work, (3) batch executing tasks. Triggers on 'start implementation', 'run tasks', 'resume'.
 ---
 
 # Feature Pipeline
@@ -109,5 +109,5 @@ Claude: [designs feature, generates task list]
 
 User: Yes / 开始实现
 
-Claude: [executes tasks via task-execution-engine]
+Claude: [executes tasks via feature-pipeline]
 ```

@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "happy-coding-agent"
+name = "happy-skills"
 version = "1.0.0"
 description = "CLI tool to deploy Claude Code configurations to any project"
 readme = "README.md"
@@ -40,8 +40,8 @@ dev = [
 hca = "cli.main:main"
 
 [project.urls]
-Homepage = "https://github.com/notedit/happy-coding-agent"
-Repository = "https://github.com/notedit/happy-coding-agent"
+Homepage = "https://github.com/notedit/happy-skills"
+Repository = "https://github.com/notedit/happy-skills"
 
 [tool.hatch.build.targets.wheel]
 packages = ["cli"]

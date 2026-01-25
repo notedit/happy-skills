@@ -35,7 +35,7 @@ def load_metadata(project_path: Path) -> Optional[Dict]:
 @click.option("--json-output", is_flag=True, help="Output as JSON")
 @click.pass_context
 def status_cmd(ctx: click.Context, json_output: bool) -> None:
-    """Show Happy Coding Agent deployment status."""
+    """Show Happy Skills deployment status."""
     cwd = Path.cwd()
     claude_dir = cwd / CLAUDE_DIR
     metadata = load_metadata(cwd)
@@ -61,7 +61,7 @@ def status_cmd(ctx: click.Context, json_output: bool) -> None:
     # Show deployment info
     console.print(
         Panel.fit(
-            f"[bold]Happy Coding Agent[/]\n"
+            f"[bold]Happy Skills[/]\n"
             f"Version: {metadata.get('version', 'unknown')}\n"
             f"Commit: {metadata.get('commit', 'unknown')[:8]}\n"
             f"Installed: {metadata.get('installed_at', 'unknown')[:10]}\n"

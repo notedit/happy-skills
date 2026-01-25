@@ -1,4 +1,4 @@
-# Happy Coding Agent
+# Happy Skills
 
 **用自然语言描述需求，自动生成设计文档并逐步实现代码。** 把"想法→设计→代码→提交"的完整开发流程自动化。
 
@@ -46,12 +46,16 @@
 ## Project Structure
 
 ```
-happy-coding-agent/
+happy-skills/
 ├── .claude-plugin/plugin.json   # Plugin manifest
 ├── commands/                    # Slash commands
-│   ├── feature-*.md
-│   └── git/                     # Git commands
-├── skills/                      # Skills
+│   ├── feature-dev.md           # Quick development
+│   └── git/                     # Git commands (8)
+├── skills/                      # Skills (direct invocation)
+│   ├── feature-analyzer/        # Design doc generation
+│   ├── feature-pipeline/        # Task execution engine
+│   ├── screenshot-analyzer/     # Screenshot analysis
+│   └── skill-creation-guide/    # Skill creation guide
 ├── agents/                      # Sub-agents
 ├── cli/                         # CLI tool (hca)
 └── docs/                        # Documentation
@@ -62,4 +66,4 @@ happy-coding-agent/
 - When updating commands, agents, or skills, sync to both `README.md` and `README_CN.md`
 - Always update both README files together to keep them in sync
 - Use AskUserQuestion for structured information gathering in skills
-- `/feature-analyzer` generates design docs, `/feature-pipeline` executes them
+- Skills can be called directly: `/feature-analyzer`, `/feature-pipeline`, `/screenshot-analyzer`

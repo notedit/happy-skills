@@ -74,7 +74,7 @@ def init_cmd(
     skills_only: bool,
     select: bool,
 ) -> None:
-    """Initialize Happy Coding Agent in the current project."""
+    """Initialize Happy Skills in the current project."""
     cwd = Path.cwd()
     claude_dir = cwd / CLAUDE_DIR
     verbose = ctx.obj.get("verbose", False)

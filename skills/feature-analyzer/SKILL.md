@@ -1,13 +1,13 @@
 ---
-name: feature-design-assistant
+name: feature-analyzer
 description: "Turn ideas into fully formed designs and specs through natural collaborative dialogue. Use when planning new features, designing architecture, or making significant changes to the codebase."
 ---
 
-# Feature Design Assistant
+# Feature Analyzer
 
 Help turn ideas into fully formed designs and specs through structured information gathering and collaborative validation.
 
-**Announce at start:** "I'm using the feature-design-assistant skill to design this feature."
+**Announce at start:** "I'm using the feature-analyzer skill to design this feature."
 
 ## Phase 1: Context Discovery
 
