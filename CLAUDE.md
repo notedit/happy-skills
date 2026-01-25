@@ -57,7 +57,6 @@ happy-skills/
 │   ├── screenshot-analyzer/     # Screenshot analysis
 │   └── skill-creation-guide/    # Skill creation guide
 ├── agents/                      # Sub-agents
-├── cli/                         # CLI tool (hca)
 └── docs/                        # Documentation
 ```
 

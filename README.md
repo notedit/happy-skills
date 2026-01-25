@@ -11,14 +11,7 @@
 /plugin marketplace add notedit/happy-skills
 
 # Step 2: Install the plugin
-/plugin install hc@happy-skills
-```
-
-### Alternative: CLI Tool
-
-```bash
-pip install git+https://github.com/notedit/happy-skills.git
-cd your-project && hca init
+/plugin install ha@happy-skills
 ```
 
 ### Verify Installation
@@ -137,22 +130,12 @@ cd your-project && hca init
 happy-skills/
 ├── .claude-plugin/plugin.json   # Plugin manifest
 ├── commands/                    # Slash commands
-│   ├── feature-*.md
+│   ├── feature-dev.md
 │   └── git/                     # Git commands
 ├── skills/                      # Skills
 ├── agents/                      # Sub-agents
-├── cli/                         # CLI tool (hca)
 └── docs/                        # Documentation
 ```
-
-## CLI Commands
-
-| Command | Description |
-|---------|-------------|
-| `hca init` | Deploy plugin to current project |
-| `hca init --select` | Interactively select components |
-| `hca update` | Update from source repository |
-| `hca status` | Show deployment status |
 
 ## License
 
