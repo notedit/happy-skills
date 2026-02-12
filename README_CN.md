@@ -102,6 +102,8 @@ npx skills add notedit/happy-skills -g
 | `screenshot-analyzer` | Extract features from UI screenshots |
 | `skill-creation-guide` | Guide for creating new skills |
 | `tts-skill` | MiniMax TTS API - 文本转语音、声音克隆、声音设计 |
+| `react-animation` | ReactBits 动画组件 + Remotion - 精选视觉效果用于视频制作 |
+| `gsap-animation` | GSAP + Remotion 动态图形 - 时间线编排、文字拆分、SVG 形变、高级缓动 |
 
 ### Agents
 

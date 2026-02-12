@@ -45,6 +45,10 @@
       {
         "name": "react-animation",
         "path": "./skills/react-animation"
+      },
+      {
+        "name": "gsap-animation",
+        "path": "./skills/gsap-animation"
       }
     ],
     "commands": [
