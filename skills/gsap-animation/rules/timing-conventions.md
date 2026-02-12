@@ -24,6 +24,17 @@ metadata:
 | **Attention pulse** | 0.3-0.5s | `sine.inOut` | repeat, yoyo |
 | **Particle burst** | 1.0-2.0s | - | With gravity |
 | **Bar chart grow** | 0.6-1.0s | `power2.out` | With stagger 0.1s |
+| **3D card flip** | 1.0-1.5s | `power2.inOut` | perspective: 800 |
+| **Perspective entrance** | 0.6-1.0s | `power3.out` | rotateY ±60deg |
+| **RotateX text swap (out)** | 0.4-0.6s | `power2.in` | rotateX: 90, origin bottom |
+| **RotateX text swap (in)** | 0.5-0.7s | `power2.out` | rotateX: -90, origin top |
+| **Text highlight box** | 0.25-0.4s | `power2.out` | scaleX: 0→1 per word |
+| **Highlight stagger** | 0.2-0.4s | - | Gap between highlight boxes |
+| **Cursor travel** | 0.6-1.0s | `power2.inOut` | Off-screen to target |
+| **Cursor click** | 0.2-0.3s | `power2.out` | Scale down 0.95 + release |
+| **Cursor ripple** | 0.5-0.7s | `power2.out` | Expanding circle |
+| **Split screen entrance** | 0.5-0.7s | `power2.out` | Per-panel stagger |
+| **Panel dim/blur** | 0.4-0.6s | `power2.inOut` | opacity:0.5 + blur(4px) |
 
 ## Easing Reference
 

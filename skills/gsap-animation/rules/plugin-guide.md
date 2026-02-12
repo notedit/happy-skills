@@ -215,3 +215,7 @@ particles.forEach((p, i) => {
 - `Physics2D` / `PhysicsProps` (particle systems)
 - `CustomBounce` / `CustomWiggle` (bouncing/shaking)
 - `Flip` (layout transitions)
+
+### Note: 3D CSS Transforms
+
+3D transforms (`rotateY`, `rotateX`, `perspective`, `preserve-3d`, `backfaceVisibility`) are **core GSAP features**, not plugins. No additional imports needed -- just use them in any `tl.to()` / `tl.from()` call.

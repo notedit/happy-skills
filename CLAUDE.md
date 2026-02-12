@@ -56,7 +56,10 @@ happy-skills/
 │   ├── feature-pipeline/        # Task execution engine
 │   ├── screenshot-analyzer/     # Screenshot analysis
 │   ├── skill-creation-guide/    # Skill creation guide
-│   └── tts-skill/               # MiniMax TTS API
+│   ├── tts-skill/               # MiniMax TTS API
+│   ├── react-animation/         # ReactBits animations for Remotion
+│   ├── gsap-animation/          # GSAP + Remotion motion graphics
+│   └── video-producer/          # End-to-end video production
 ├── agents/                      # Sub-agents
 └── docs/                        # Documentation
 ```
@@ -66,4 +69,4 @@ happy-skills/
 - When updating commands, agents, or skills, sync to both `README.md` and `README_CN.md`
 - Always update both README files together to keep them in sync
 - Use AskUserQuestion for structured information gathering in skills
-- Skills can be called directly: `/feature-dev`, `/feature-analyzer`, `/feature-pipeline`, `/screenshot-analyzer`, `/tts-skill`
+- Skills can be called directly: `/feature-dev`, `/feature-analyzer`, `/feature-pipeline`, `/screenshot-analyzer`, `/tts-skill`, `/video-producer`

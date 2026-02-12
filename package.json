@@ -49,6 +49,10 @@
       {
         "name": "gsap-animation",
         "path": "./skills/gsap-animation"
+      },
+      {
+        "name": "video-producer",
+        "path": "./skills/video-producer"
       }
     ],
     "commands": [

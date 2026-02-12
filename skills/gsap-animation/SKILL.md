@@ -177,6 +177,67 @@ const containerRef = useGSAPTimeline((tl, container) => {
 
 **Char sets:** `"upperCase"`, `"lowerCase"`, `"upperAndLowerCase"`, `"01"`, or custom string.
 
+### Text Highlight Box
+
+Colored rectangles scale in behind specific words. Uses SplitText for word-level positioning, then absolutely-positioned `<div>` boxes at lower z-index.
+
+```tsx
+const TextHighlightBox: React.FC<{
+  text: string;
+  highlights: Array<{ wordIndex: number; color: string }>;
+  highlightDelay?: number;
+  highlightStagger?: number;
+}> = ({ text, highlights, highlightDelay = 0.5, highlightStagger = 0.3 }) => {
+  const containerRef = useGSAPWithFonts((tl, container) => {
+    const textEl = container.querySelector('.highlight-text')!;
+    const split = SplitText.create(textEl, { type: 'words' });
+
+    // Entrance: words fade in
+    tl.from(split.words, {
+      y: 20, opacity: 0, duration: 0.5, stagger: 0.05, ease: 'power2.out',
+    });
+
+    // Highlight boxes scale in behind target words
+    highlights.forEach(({ wordIndex, color }, i) => {
+      const word = split.words[wordIndex] as HTMLElement;
+      if (!word) return;
+
+      const box = document.createElement('div');
+      Object.assign(box.style, {
+        position: 'absolute',
+        left: `${word.offsetLeft - 4}px`,
+        top: `${word.offsetTop - 2}px`,
+        width: `${word.offsetWidth + 8}px`,
+        height: `${word.offsetHeight + 4}px`,
+        background: color,
+        borderRadius: '4px',
+        zIndex: '-1',
+        transformOrigin: 'left center',
+        transform: 'scaleX(0)',
+      });
+      textEl.appendChild(box);
+
+      tl.to(box, {
+        scaleX: 1, duration: 0.3, ease: 'power2.out',
+      }, highlightDelay + i * highlightStagger);
+    });
+  });
+
+  return (
+    <AbsoluteFill style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div ref={containerRef}>
+        <p className="highlight-text" style={{
+          fontSize: 64, fontWeight: 'bold', color: '#fff',
+          position: 'relative', maxWidth: '70%', lineHeight: 1.2,
+        }}>{text}</p>
+      </div>
+    </AbsoluteFill>
+  );
+};
+```
+
+**Props:** `highlights` is an array of `{ wordIndex, color }` targeting specific words (0-indexed from SplitText).
+
 ---
 
 ## 2. SVG Animations
@@ -233,7 +294,193 @@ const containerRef = useGSAPTimeline((tl, container) => {
 
 ---
 
-## 3. Transitions
+## 3. 3D Transform Patterns
+
+> **Performance note:** Limit to 3-4 simultaneous 3D containers per scene. Each `preserve-3d` container triggers GPU compositing layers.
+
+### CardFlip3D
+
+```tsx
+const CardFlip3D: React.FC<{
+  frontContent: React.ReactNode;
+  backContent: React.ReactNode;
+  flipDelay?: number;
+  flipDuration?: number;
+}> = ({ frontContent, backContent, flipDelay = 0.5, flipDuration = 1.2 }) => {
+  const containerRef = useGSAPTimeline((tl, container) => {
+    const card = container.querySelector('.card-3d')!;
+    tl.to(card, {
+      rotateY: 180, duration: flipDuration, ease: 'power2.inOut',
+    }, flipDelay);
+  });
+
+  return (
+    <AbsoluteFill style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div ref={containerRef} style={{ perspective: 800 }}>
+        <div className="card-3d" style={{
+          width: 500, height: 320, position: 'relative', transformStyle: 'preserve-3d',
+        }}>
+          {/* Front face */}
+          <div style={{
+            position: 'absolute', inset: 0, backfaceVisibility: 'hidden',
+            background: '#1e293b', borderRadius: 16, display: 'flex',
+            alignItems: 'center', justifyContent: 'center', padding: 32,
+          }}>{frontContent}</div>
+          {/* Back face (pre-rotated 180deg) */}
+          <div style={{
+            position: 'absolute', inset: 0, backfaceVisibility: 'hidden',
+            background: '#3b82f6', borderRadius: 16, transform: 'rotateY(180deg)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 32,
+          }}>{backContent}</div>
+        </div>
+      </div>
+    </AbsoluteFill>
+  );
+};
+```
+
+### PerspectiveEntrance
+
+Two elements enter from opposite sides with rotateY, converging to center.
+
+```tsx
+const PerspectiveEntrance: React.FC<{
+  leftContent: React.ReactNode;
+  rightContent: React.ReactNode;
+}> = ({ leftContent, rightContent }) => {
+  const containerRef = useGSAPTimeline((tl, container) => {
+    const left = container.querySelector('.pe-left')!;
+    const right = container.querySelector('.pe-right')!;
+
+    tl.from(left, { x: -600, rotateY: 60, opacity: 0, duration: 0.8, ease: 'power3.out' })
+      .from(right, { x: 600, rotateY: -60, opacity: 0, duration: 0.8, ease: 'power3.out' }, '-=0.5')
+      .to(left, { rotateY: 0, duration: 0.4, ease: 'power2.out' }, '-=0.3')
+      .to(right, { rotateY: 0, duration: 0.4, ease: 'power2.out' }, '-=0.3');
+  });
+
+  return (
+    <AbsoluteFill style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', perspective: 800 }}>
+      <div ref={containerRef} style={{ display: 'flex', gap: 40, alignItems: 'center' }}>
+        <div className="pe-left">{leftContent}</div>
+        <div className="pe-right">{rightContent}</div>
+      </div>
+    </AbsoluteFill>
+  );
+};
+```
+
+### RotateXTextSwap
+
+Outgoing text tilts backward, incoming text falls forward. Uses `transformOrigin` to pivot from the correct edge.
+
+```tsx
+const RotateXTextSwap: React.FC<{
+  textOut: string;
+  textIn: string;
+  swapDelay?: number;
+}> = ({ textOut, textIn, swapDelay = 1.0 }) => {
+  const containerRef = useGSAPWithFonts((tl, container) => {
+    const outEl = container.querySelector('.swap-out')!;
+    const inEl = container.querySelector('.swap-in')!;
+
+    // Out: tilt backward
+    tl.to(outEl, {
+      rotateX: 90, opacity: 0, duration: 0.5,
+      transformOrigin: 'center bottom', ease: 'power2.in',
+    }, swapDelay);
+
+    // In: fall forward
+    tl.fromTo(inEl,
+      { rotateX: -90, opacity: 0, transformOrigin: 'center top' },
+      { rotateX: 0, opacity: 1, duration: 0.6, ease: 'power2.out' },
+      `>${-0.15}`
+    );
+  });
+
+  return (
+    <AbsoluteFill style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', perspective: 600 }}>
+      <div ref={containerRef} style={{ position: 'relative', textAlign: 'center' }}>
+        <h1 className="swap-out" style={{ fontSize: 80, fontWeight: 'bold', color: '#fff' }}>{textOut}</h1>
+        <h1 className="swap-in" style={{
+          fontSize: 80, fontWeight: 'bold', color: '#3b82f6',
+          position: 'absolute', inset: 0,
+        }}>{textIn}</h1>
+      </div>
+    </AbsoluteFill>
+  );
+};
+```
+
+---
+
+## 4. Interaction Simulation
+
+### CursorClick
+
+Simulates a cursor navigating to a target and clicking. Cursor slides in, target depresses, ripple expands.
+
+```tsx
+const CursorClick: React.FC<{
+  targetSelector: string;
+  cursorDelay?: number;
+  clickDelay?: number;
+  children: React.ReactNode;
+}> = ({ targetSelector, cursorDelay = 0.3, clickDelay = 0.8, children }) => {
+  const containerRef = useGSAPTimeline((tl, container) => {
+    const target = container.querySelector(targetSelector)!;
+    const cursor = container.querySelector('.sim-cursor')!;
+    const ripple = container.querySelector('.sim-ripple')!;
+
+    const rect = target.getBoundingClientRect();
+    const containerRect = container.getBoundingClientRect();
+    const targetX = rect.left - containerRect.left + rect.width / 2;
+    const targetY = rect.top - containerRect.top + rect.height / 2;
+
+    // Cursor travels to target
+    tl.fromTo(cursor,
+      { x: containerRect.width + 40, y: targetY - 20 },
+      { x: targetX, y: targetY, duration: clickDelay, ease: 'power2.inOut' },
+      cursorDelay
+    );
+
+    // Click: target depresses and releases
+    tl.to(target, { scale: 0.95, duration: 0.1, ease: 'power2.in' })
+      .to(target, { scale: 1, duration: 0.15, ease: 'power2.out' });
+
+    // Ripple expands (overlaps with click release)
+    tl.fromTo(ripple,
+      { x: targetX, y: targetY, scale: 0, opacity: 1 },
+      { scale: 3, opacity: 0, duration: 0.6, ease: 'power2.out' },
+      '<-0.1'
+    );
+  });
+
+  return (
+    <AbsoluteFill>
+      <div ref={containerRef} style={{ position: 'relative', width: '100%', height: '100%' }}>
+        {children}
+        {/* Cursor */}
+        <svg className="sim-cursor" width="24" height="24" viewBox="0 0 24 24"
+          style={{ position: 'absolute', top: 0, left: 0, zIndex: 100, pointerEvents: 'none' }}>
+          <path d="M5 3l14 8-6 2-4 6z" fill="#fff" stroke="#000" strokeWidth="1.5" />
+        </svg>
+        {/* Ripple */}
+        <div className="sim-ripple" style={{
+          position: 'absolute', top: 0, left: 0, width: 40, height: 40,
+          borderRadius: '50%', border: '2px solid rgba(59,130,246,0.6)',
+          transform: 'translate(-50%, -50%) scale(0)', pointerEvents: 'none',
+        }} />
+      </div>
+    </AbsoluteFill>
+  );
+};
+```
+
+**Props:** `targetSelector` is a CSS selector for the element to "click" within the container. Cursor enters from off-screen right.
+
+---
+
+## 5. Transitions
 
 ### Clip-Path Transitions
 
@@ -272,7 +519,7 @@ tl.to(outgoing, { opacity: 0, duration: 1 })
 
 ---
 
-## 4. Templates
+## 6. Templates
 
 ### Lower Third
 
@@ -421,9 +668,81 @@ const Outro: React.FC<{ headline: string; tagline?: string; logoSvg?: React.Reac
 };
 ```
 
+### SplitScreenComparison
+
+Two panels side-by-side with staggered entrance, optional center badge, and left-panel dim effect.
+
+```tsx
+const SplitScreenComparison: React.FC<{
+  leftPanel: React.ReactNode;
+  rightPanel: React.ReactNode;
+  leftLabel?: string;
+  rightLabel?: string;
+  centerElement?: React.ReactNode;
+  dimLeft?: boolean;
+  hold?: number;
+}> = ({ leftPanel, rightPanel, leftLabel, rightLabel, centerElement, dimLeft = false, hold = 2 }) => {
+  const containerRef = useGSAPTimeline((tl, container) => {
+    const left = container.querySelector('.ssc-left')!;
+    const right = container.querySelector('.ssc-right')!;
+    const badge = container.querySelector('.ssc-badge');
+
+    // Staggered entrance
+    tl.from(left, { x: -80, opacity: 0, duration: 0.6, ease: 'power2.out' })
+      .from(right, { x: 80, opacity: 0, duration: 0.6, ease: 'power2.out' }, '-=0.4');
+
+    // Center badge pop
+    if (badge) {
+      tl.from(badge, { scale: 0, duration: 0.4, ease: 'back.out(2)' }, '-=0.2');
+    }
+
+    // Hold
+    tl.to({}, { duration: hold });
+
+    // Dim left, pop right (comparison effect)
+    if (dimLeft) {
+      tl.to(left, { opacity: 0.5, filter: 'blur(4px)', duration: 0.5, ease: 'power2.inOut' })
+        .to(right, { scale: 1.02, duration: 0.5, ease: 'power2.out' }, '<');
+    }
+  });
+
+  return (
+    <AbsoluteFill style={{ display: 'flex' }}>
+      <div ref={containerRef} style={{ display: 'flex', width: '100%', height: '100%' }}>
+        <div className="ssc-left" style={{
+          flex: 1, background: '#1e1e2e', display: 'flex', flexDirection: 'column',
+          alignItems: 'center', justifyContent: 'center', padding: 40, position: 'relative',
+        }}>
+          {leftLabel && <div style={{ fontSize: 24, opacity: 0.6, marginBottom: 16, color: '#fff' }}>{leftLabel}</div>}
+          {leftPanel}
+        </div>
+        {centerElement && (
+          <div className="ssc-badge" style={{
+            position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)',
+            zIndex: 10, background: '#3b82f6', borderRadius: '50%', width: 60, height: 60,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            fontSize: 20, fontWeight: 'bold', color: '#fff',
+          }}>{centerElement}</div>
+        )}
+        <div className="ssc-right" style={{
+          flex: 1, background: 'rgba(255,255,255,0.06)', backdropFilter: 'blur(20px)',
+          display: 'flex', flexDirection: 'column', alignItems: 'center',
+          justifyContent: 'center', padding: 40,
+        }}>
+          {rightLabel && <div style={{ fontSize: 24, opacity: 0.6, marginBottom: 16, color: '#fff' }}>{rightLabel}</div>}
+          {rightPanel}
+        </div>
+      </div>
+    </AbsoluteFill>
+  );
+};
+```
+
+**Props:** Set `dimLeft: true` for comparison scenes where right panel should "win". Left panel uses dark background (`#1e1e2e`), right panel uses glassmorphism (`backdropFilter: blur(20px)`).
+
 ---
 
-## 5. Registered Effects
+## 7. Registered Effects
 
 Pre-register effects for fluent timeline API. Import once at entry point.
 
@@ -474,6 +793,50 @@ gsap.registerEffect({
   extendTimeline: true,
 });
 
+gsap.registerEffect({
+  name: 'flipCard',
+  effect: (targets, config) => gsap.to(targets,
+    { rotateY: 180, duration: config.duration, ease: config.ease }),
+  defaults: { duration: 1.2, ease: 'power2.inOut' },
+  extendTimeline: true,
+});
+
+gsap.registerEffect({
+  name: 'perspectiveIn',
+  effect: (targets, config) => {
+    const fromX = config.fromRight ? 600 : -600;
+    const fromRotateY = config.fromRight ? -60 : 60;
+    return gsap.from(targets, {
+      x: fromX, rotateY: fromRotateY, opacity: 0,
+      duration: config.duration, ease: config.ease,
+    });
+  },
+  defaults: { duration: 0.8, ease: 'power3.out', fromRight: false },
+  extendTimeline: true,
+});
+
+gsap.registerEffect({
+  name: 'textHighlight',
+  effect: (targets, config) => gsap.from(targets, {
+    scaleX: 0, transformOrigin: 'left center',
+    duration: config.duration, stagger: config.stagger, ease: config.ease,
+  }),
+  defaults: { duration: 0.3, stagger: 0.3, ease: 'power2.out' },
+  extendTimeline: true,
+});
+
+gsap.registerEffect({
+  name: 'cursorClick',
+  effect: (targets, config) => {
+    const tl = gsap.timeline();
+    tl.to(targets, { scale: 0.95, duration: 0.1, ease: 'power2.in' })
+      .to(targets, { scale: 1, duration: 0.15, ease: 'power2.out' });
+    return tl;
+  },
+  defaults: {},
+  extendTimeline: true,
+});
+
 // Simple property animations (fade, slide, scale) should use Remotion's
 // interpolate() directly — GSAP registered effects are reserved for
 // operations that Remotion cannot do natively (SplitText, DrawSVG, etc.).
@@ -485,13 +848,18 @@ const containerRef = useGSAPTimeline((tl, container) => {
   tl.textReveal('.title')
     .charCascade('.subtitle', {}, '-=0.3')
     .circleReveal('.scene-2', {}, '+=0.5')
+    .flipCard('.card-3d')
+    .perspectiveIn('.panel-left')
+    .perspectiveIn('.panel-right', { fromRight: true }, '-=0.5')
+    .textHighlight('.highlight-box')
+    .cursorClick('.cta-button', {}, '+=0.3')
     .drawIn('.logo-path');
 });
 ```
 
 ---
 
-## 6. Easing Reference
+## 8. Easing Reference
 
 | Motion Feel | GSAP Ease | Use Case |
 |-------------|-----------|----------|
@@ -511,7 +879,7 @@ const containerRef = useGSAPTimeline((tl, container) => {
 
 ---
 
-## 7. Combining with react-animation Skill
+## 9. Combining with react-animation Skill
 
 ```tsx
 const CombinedScene: React.FC = () => (
@@ -536,7 +904,7 @@ const CombinedScene: React.FC = () => (
 
 ---
 
-## 8. Composition Registration
+## 10. Composition Registration
 
 ```tsx
 export const RemotionRoot: React.FC = () => (
@@ -563,7 +931,7 @@ export const RemotionRoot: React.FC = () => (
 
 ---
 
-## 9. Rendering
+## 11. Rendering
 
 ```bash
 # Default MP4
@@ -580,4 +948,19 @@ npx remotion render src/index.ts TitleCard --codec prores --prores-profile 4444
 
 # With audio
 # Use <Audio src={staticFile('bgm.mp3')} /> in composition
+
+# Transparent background (alpha channel)
+npx remotion render src/index.ts Overlay --codec prores --prores-profile 4444 --output out/overlay.mov
+npx remotion render src/index.ts Overlay --codec vp9 --output out/overlay.webm
 ```
+
+### Transparent Background Formats
+
+| Format | Alpha Support | Quality | File Size | Compatibility |
+|--------|:------------:|---------|-----------|---------------|
+| ProRes 4444 (`.mov`) | Yes | Lossless | Large | Final Cut, Premiere, DaVinci |
+| WebM VP9 (`.webm`) | Yes | Lossy | Small | Web, Chrome, After Effects |
+| MP4 H.264 (`.mp4`) | **No** | Lossy | Small | Universal playback |
+| GIF (`.gif`) | 1-bit only | Low | Medium | Web, social |
+
+Use ProRes 4444 for professional compositing. Use WebM VP9 for web overlays. MP4/H.264 does **not** support alpha channels.

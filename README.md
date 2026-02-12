@@ -104,6 +104,7 @@ npx skills add notedit/happy-skills -g
 | `tts-skill` | MiniMax TTS API - text-to-speech, voice clone, voice design |
 | `react-animation` | ReactBits animations for Remotion - curated visual effects for video production |
 | `gsap-animation` | GSAP + Remotion motion graphics - timeline orchestration, text splitting, SVG morphing |
+| `video-producer` | End-to-end Remotion video production from natural language briefs - narrative structure, scene orchestration, rendering |
 
 ### Agents
 
