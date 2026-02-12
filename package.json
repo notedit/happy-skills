@@ -41,6 +41,10 @@
       {
         "name": "tts-skill",
         "path": "./skills/tts-skill"
+      },
+      {
+        "name": "react-animation",
+        "path": "./skills/react-animation"
       }
     ],
     "commands": [
