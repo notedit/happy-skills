@@ -21,38 +21,40 @@ metadata:
 
 This is the most common structure. Every scene serves a specific persuasion function.
 
-| # | Scene | Duration | Purpose | Recommended Pattern | Content Slot |
-|---|-------|----------|---------|--------------------|----|
-| 1 | Hook | 2-3s | Grab attention, state the premise | TitleCard + PerspectiveEntrance | Product name + bold claim |
-| 2 | Question | 2-3s | Present the pain point | CardFlip3D | Pain on front → solution tease on back |
-| 3 | Brand Reveal | 2-3s | Introduce the product | charCascade effect | "Meet [Product Name]" |
-| 4 | Core Benefit | 3-4s | Show the key value prop | SplitScreenComparison | Old way vs new way |
-| 5 | Comparison | 3-4s | Make the winner clear | SplitScreenComparison (dimLeft) | Left dims → right pops |
-| 6 | Feature Demo | 3-4s | Show product in action | CursorClick | Simulated UI interaction |
-| 7 | Showcase | 3-4s | Social proof / variety | Remotion native grid | Feature grid or screenshot montage |
-| 8 | CTA | 2-3s | Call to action | Outro + CursorClick | Tagline + button click simulation |
+| # | Scene | Duration | Purpose | Default Pattern (Spring) | GSAP Alternative | Content Slot |
+|---|-------|----------|---------|-------------------------|-------------------|---|
+| 1 | Hook | 2-3s | Grab attention, state the premise | SpringEntrance + WordTrail | TitleCard + PerspectiveEntrance | Product name + bold claim |
+| 2 | Question | 2-3s | Present the pain point | SpringCardFlip | CardFlip3D | Pain on front → solution tease on back |
+| 3 | Brand Reveal | 2-3s | Introduce the product | CharacterTrail (SPRING.bouncy) | charCascade effect | "Meet [Product Name]" |
+| 4 | Core Benefit | 3-4s | Show the key value prop | SpringTrail side-by-side | SplitScreenComparison | Old way vs new way |
+| 5 | Comparison | 3-4s | Make the winner clear | Spring opacity+scale shift | SplitScreenComparison (dimLeft) | Left dims → right pops |
+| 6 | Feature Demo | 3-4s | Show product in action | ScalePop UI elements | CursorClick | Simulated UI interaction |
+| 7 | Showcase | 3-4s | Social proof / variety | GridStagger (SPRING.pop) | Remotion native grid | Feature grid or screenshot montage |
+| 8 | CTA | 2-3s | Call to action | SpringOutro | Outro + CursorClick | Tagline + button click simulation |
 
-**Transitions:** `circleReveal` or `wipeIn` between scenes. Use TransitionSeries with `fade()` or `slide()` for simpler videos.
+**Spring-first rule:** Default to the Spring column. Use the GSAP Alternative only when you need SplitText char masking, DrawSVG, or complex timeline labels.
+
+**Transitions:** `SpringCrossfade` or `SpringSlide` between scenes (default). Use `circleReveal` or `wipeIn` (GSAP) for cinematic effect. Use TransitionSeries with `fade()` or `slide()` for simple linear transitions.
 
 **Background:** Single FluidBackground component spanning all scenes (see style presets).
 
 **Scene 1 detail — Hook:**
-Two-phase scene. Phase 1 (first 60%): Product name + bold claim with perspective entrance from both sides. Phase 2 (last 40%): Content rotates backward (rotateX exit), new text falls in — the "but" statement introducing the problem.
+Two-phase scene. **Spring version:** Phase 1 — product name + bold claim enter from sides via `spring({ config: SPRING.bouncy })` with `interpolate(entrance, [0,1], [-600, 0])`. Phase 2 — first text exits with `SPRING.stiff`, new text springs in with `SPRING.pop`. **GSAP version:** Phase 1 — PerspectiveEntrance with rotateY from both sides. Phase 2 — rotateX exit, new text falls in.
 
 **Scene 2 detail — Question:**
-Large card centered, front shows the "old way" (terminal/code), back shows the "new way" (clean UI). Card flips via 3D rotateY at ~40% through the scene. Front face has dark background, back face has glassmorphism.
+Large card centered, front shows the "old way" (terminal/code), back shows the "new way" (clean UI). **Spring version:** SpringCardFlip — spring-driven 3D rotateY at ~40% through scene, natural bounce on landing. **GSAP version:** CardFlip3D with precise timeline control. Front face has dark background, back face has glassmorphism.
 
 **Scene 4-5 detail — Comparison:**
-Scene 4 shows both panels equally. Scene 5 reuses the layout but applies dimLeft: left panel gets opacity:0.5 + blur(4px), right panel scales to 1.02. This creates a clear visual "winner".
+Scene 4 shows both panels equally with SpringTrail stagger entrance. Scene 5 reuses the layout but shifts emphasis: left panel animates to opacity:0.5 + blur(4px) via spring, right panel spring-scales to 1.02. This creates a clear visual "winner".
 
 **Scene 6 detail — Feature Demo:**
-Show a simplified UI mockup (input field, chat interface, or dashboard). Cursor slides in from off-screen, clicks the primary action. Target element depresses (scale:0.95) then releases. Ripple expands from click point.
+Show a simplified UI mockup. UI elements enter with `ScalePop` (`SPRING.bouncy`). **GSAP CursorClick** is still recommended here for realistic cursor path + click ripple (spring can't easily simulate cursor movement). Mix: spring entrances for UI elements, GSAP for cursor interaction.
 
 **Scene 7 detail — Showcase:**
-Grid of cards (3x3 or 4x2) with staggered pop-in entrance. Each card has a gradient top half + label bottom half. Grid slowly scrolls diagonally. After 30% of scene, overlay text appears and grid blurs behind it.
+Grid of cards (3x3 or 4x2). **Spring version (default):** `GridStagger` with `SPRING.pop` — center-out pop-in, distance-based delay calculation. After 30% of scene, overlay text springs in and grid blurs behind it. **Remotion version:** Simple staggered opacity with `interpolate()`.
 
 **Scene 8 detail — CTA:**
-Brand name in large type (typewriter effect optional). Tagline fades in below. After 60% of scene, cursor slides to CTA button and clicks. End on the ripple expanding.
+**Spring version (default):** `SpringOutro` — brand name pops in with `SPRING.bouncy`, tagline springs in with delay. CTA button uses `ScalePop`. **GSAP version:** Outro with DrawSVG logo reveal + CursorClick on button.
 
 ---
 
@@ -62,15 +64,17 @@ Brand name in large type (typewriter effect optional). Tagline fades in below. A
 
 Pure typography and color. No product UI or mockups. Each text scene delivers one key message with visual emphasis through highlight boxes.
 
-| # | Scene | Duration | Purpose | Recommended Pattern | Content Slot |
-|---|-------|----------|---------|--------------------|----|
-| 1 | Opening | 2-3s | First powerful statement | TitleCard or TextHighlightBox | Opening quote or hook |
-| 2 | Visual Break A | 1-2s | Visual breathing room | PerspectiveEntrance or full-screen image | Abstract shape, icon, or footage |
-| 3 | Statement B | 2-3s | Second key message | TextHighlightBox | Message with highlighted keywords |
-| 4 | Visual Break B | 1-2s | Contrast moment | CardFlip3D or full-screen image | Visual reveal on flip |
-| 5 | Statement C | 2-3s | Third key message | RotateXTextSwap | Swap between contrasting ideas |
-| 6 | Visual Break C | 1-2s | Final visual | Full-screen image or shape | Transition to closing |
-| 7 | Closing | 2-3s | Brand + tagline | Outro | Brand name + tagline |
+| # | Scene | Duration | Purpose | Default Pattern (Spring) | GSAP Alternative | Content Slot |
+|---|-------|----------|---------|-------------------------|-------------------|---|
+| 1 | Opening | 2-3s | First powerful statement | WordTrail (SPRING.stiff) | TitleCard or TextHighlightBox | Opening quote or hook |
+| 2 | Visual Break A | 1-2s | Visual breathing room | ScalePop + SpringEntrance | PerspectiveEntrance or full-screen image | Abstract shape, icon, or footage |
+| 3 | Statement B | 2-3s | Second key message | WordTrail + spring highlight | TextHighlightBox (needs SplitText) | Message with highlighted keywords |
+| 4 | Visual Break B | 1-2s | Contrast moment | SpringCardFlip | CardFlip3D or full-screen image | Visual reveal on flip |
+| 5 | Statement C | 2-3s | Third key message | useSpringEnterExit text swap | RotateXTextSwap | Swap between contrasting ideas |
+| 6 | Visual Break C | 1-2s | Final visual | ScalePop shape entrance | Full-screen image or shape | Transition to closing |
+| 7 | Closing | 2-3s | Brand + tagline | SpringOutro | Outro (GSAP for DrawSVG logo) | Brand name + tagline |
+
+**Note:** For Bold Typography preset, GSAP TextHighlightBox (Scene 3) is often preferred because it requires SplitText for word-level positioning of highlight boxes. Spring alternatives work well for all other scenes.
 
 **Typography rules (critical):**
 - Unified font size: 72-96px across all text scenes
@@ -90,6 +94,18 @@ Can be full-screen placeholder images (cityscape, nature, architecture) or abstr
 ## 3. Social Media Overlay (4-6s, transparent background)
 
 Single scene with a multi-step animation sequence. Rendered with alpha channel for compositing in video editors.
+
+**Spring version (default):**
+
+| Step | Timing | Animation | Spring Config |
+|------|--------|-----------|--------------|
+| 1. Cards pop in | 0-18f | `ScalePop` stagger 3 frames | `SPRING.pop` |
+| 2. Bars extend | 12-27f | `scaleX: 0→1` via spring | `SPRING.snappy` |
+| 3. Text fade in | 21-30f | opacity + translateY via spring | `SPRING.smooth` |
+| 4. Hold | 30-120f | Static display | — |
+| 5. Reverse exit | 120-150f | `useSpringEnterExit` reverse | `SPRING.stiff` |
+
+**GSAP version (for complex overlays):**
 
 | Step | Timing | Animation | Ease |
 |------|--------|-----------|------|

@@ -10,10 +10,11 @@ metadata:
 ```
 src/
 ├── config.ts               # All video parameters (single source of truth)
-├── index.ts                # Entry point (registers GSAP plugins)
+├── spring-presets.ts        # Spring physics presets (ALWAYS included)
+├── index.ts                # Entry point
 ├── Root.tsx                # Composition registration
 ├── Composition.tsx         # Main video with TransitionSeries
-├── gsap-setup.ts           # GSAP plugin registration (if using GSAP)
+├── gsap-setup.ts           # GSAP plugin registration (only if using GSAP patterns)
 ├── components/
 │   ├── FluidBackground.tsx # Persistent animated background
 │   ├── BrowserMockup.tsx   # Browser window frame (if needed)
@@ -24,6 +25,8 @@ src/
     ├── Scene3Reveal.tsx
     └── ...                 # One file per scene
 ```
+
+**Note:** `spring-presets.ts` is always generated. `gsap-setup.ts` is only generated when GSAP patterns are used.
 
 ---
 
@@ -60,7 +63,7 @@ export const COLORS = {
 };
 
 export const TYPOGRAPHY = {
-  fontFamily: 'Inter, system-ui, sans-serif',
+  fontFamily: '"Satoshi", "General Sans", sans-serif',  // See style-presets.md for per-preset fonts
   heroSize: 90,
   titleSize: 64,
   bodySize: 32,
@@ -113,6 +116,8 @@ Always register individual scene previews — this lets the user preview and ite
 
 ## Composition.tsx Template
 
+**CRITICAL: Each scene inside `TransitionSeries` MUST have its own opaque background.** If you place `FluidBackground` outside `TransitionSeries` and scenes are transparent, `fade()` transitions will show BOTH scenes simultaneously — their content overlaps and creates a visual glitch. The fix is to wrap each scene with its own background layer.
+
 ```tsx
 import { AbsoluteFill, Sequence } from 'remotion';
 import { TransitionSeries, linearTiming } from '@remotion/transitions';
@@ -121,15 +126,24 @@ import { FluidBackground } from './components/FluidBackground';
 import { SCENE_FRAMES, TRANSITION_FRAMES, COLORS } from './config';
 // Import all scenes...
 
+// Each scene gets its own opaque background to prevent transition overlap
+const SceneWithBackground: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => (
+  <AbsoluteFill style={{ backgroundColor: COLORS.background }}>
+    <FluidBackground />
+    {children}
+  </AbsoluteFill>
+);
+
 export const MainVideo: React.FC = () => {
   return (
     <AbsoluteFill style={{ backgroundColor: COLORS.background }}>
-      {/* Background persists across all scenes */}
-      <FluidBackground />
-
       <TransitionSeries>
         <TransitionSeries.Sequence durationInFrames={SCENE_FRAMES.scene1}>
-          <Scene1Hook />
+          <SceneWithBackground>
+            <Scene1Hook />
+          </SceneWithBackground>
         </TransitionSeries.Sequence>
 
         <TransitionSeries.Transition
@@ -138,7 +152,9 @@ export const MainVideo: React.FC = () => {
         />
 
         <TransitionSeries.Sequence durationInFrames={SCENE_FRAMES.scene2}>
-          <Scene2Question />
+          <SceneWithBackground>
+            <Scene2Question />
+          </SceneWithBackground>
         </TransitionSeries.Sequence>
 
         {/* ... remaining scenes with transitions */}
@@ -148,6 +164,32 @@ export const MainVideo: React.FC = () => {
 };
 ```
 
+**Why this works:** During a `fade()` transition, Remotion renders both the exiting and entering scenes simultaneously. The exiting scene fades out (opacity 1→0) while the entering scene fades in (opacity 0→1). If scenes lack their own opaque background, the content of both scenes bleeds through. By giving each scene its own `SceneWithBackground`, the entering scene's background properly covers the exiting scene during the crossfade.
+
+---
+
+## spring-presets.ts Template (ALWAYS generate)
+
+```tsx
+// src/spring-presets.ts
+import { SpringConfig } from 'remotion';
+
+export const SPRING = {
+  smooth:   { damping: 200 } as Partial<SpringConfig>,
+  snappy:   { damping: 20, stiffness: 200 } as Partial<SpringConfig>,
+  bouncy:   { damping: 8 } as Partial<SpringConfig>,
+  heavy:    { damping: 15, stiffness: 80, mass: 2 } as Partial<SpringConfig>,
+  wobbly:   { damping: 4, stiffness: 80 } as Partial<SpringConfig>,
+  stiff:    { damping: 15, stiffness: 300 } as Partial<SpringConfig>,
+  gentle:   { damping: 20, stiffness: 40, mass: 1.5 } as Partial<SpringConfig>,
+  molasses: { damping: 25, stiffness: 30, mass: 3 } as Partial<SpringConfig>,
+  pop:      { damping: 6, stiffness: 150 } as Partial<SpringConfig>,
+  rubber:   { damping: 3, stiffness: 100, mass: 0.5 } as Partial<SpringConfig>,
+} as const;
+```
+
+Customize presets based on the video's emotional tone. See spring-animation skill `rules/spring-presets.md` for brand-specific and role-based config sets.
+
 ---
 
 ## Scene Component Template
@@ -155,13 +197,15 @@ export const MainVideo: React.FC = () => {
 ```tsx
 import { AbsoluteFill, useCurrentFrame, useVideoConfig, spring, interpolate } from 'remotion';
 import { COLORS, TYPOGRAPHY } from '../config';
+import { SPRING } from '../spring-presets';
 
 export const Scene1Hook: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  // Animation logic here
-  const entrance = spring({ frame, fps, config: { damping: 12, stiffness: 120 } });
+  // Spring-driven entrance (default for all scenes)
+  const entrance = spring({ frame, fps, config: SPRING.bouncy });
+  const titleY = interpolate(entrance, [0, 1], [50, 0]);
 
   return (
     <AbsoluteFill style={{
@@ -169,7 +213,12 @@ export const Scene1Hook: React.FC = () => {
       alignItems: 'center',
       justifyContent: 'center',
     }}>
-      {/* Scene content */}
+      <h1 style={{
+        opacity: entrance,
+        transform: `translateY(${titleY}px)`,
+      }}>
+        {/* Scene content */}
+      </h1>
     </AbsoluteFill>
   );
 };

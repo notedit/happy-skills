@@ -51,6 +51,10 @@
         "path": "./skills/gsap-animation"
       },
       {
+        "name": "spring-animation",
+        "path": "./skills/spring-animation"
+      },
+      {
         "name": "video-producer",
         "path": "./skills/video-producer"
       }
