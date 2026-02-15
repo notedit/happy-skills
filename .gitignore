@@ -154,3 +154,6 @@ build/
 
 
 openclaw/
+
+# Generated cover images
+cover-image/
