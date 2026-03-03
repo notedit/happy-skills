@@ -1,107 +1,95 @@
 # Happy Skills
 
-[中文](./README_CN.md) | **English**
+**中文** | [English](./README_EN.md)
 
-**Describe requirements in natural language, auto-generate design docs and implement code step by step.** Automate the complete development flow: Idea → Design → Code → Commit.
+一组为 [Claude Code](https://docs.anthropic.com/en/docs/claude-code) 打造的 Skills，覆盖从需求分析到代码交付的完整研发流程。用一句自然语言启动，AI 自动完成探索、设计、实现、测试和提交。
 
-## Installation
-
-### Using npx skills (Recommended)
+## 安装
 
 ```bash
-# Install all skills from this package
+# 一键安装所有 Skills
 npx skills add notedit/happy-skills
 
-# Install specific skills only
-npx skills add notedit/happy-skills --skills feature-dev,feature-analyzer
+# 只装你需要的
+npx skills add notedit/happy-skills --skills feature-dev,issue-flow
 
-# Install globally (available in all projects)
+# 全局安装（所有项目可用）
 npx skills add notedit/happy-skills -g
 ```
 
-> **Note**: `npx skills` requires the [skills CLI](https://www.npmjs.com/package/skills). Install it with `npm install -g skills` if not already available.
+> 需要先安装 [skills CLI](https://www.npmjs.com/package/skills)：`npm install -g skills`
 
-### Verify Installation
+## 快速上手
+
+### 从 Issue 到 PR —— 一条命令搞定
 
 ```bash
-# Test a skill
-/feature-dev add a simple feature
-
-# Or test another skill
-/feature-analyzer design a user authentication system
+/issue-flow #123                                      # 自动：读 Issue → 探索代码 → 设计方案 → 组建团队 → 实现 → 提 PR
+/issue-flow https://github.com/org/repo/issues/123    # 也支持 URL
+/issue-flow                                           # 无参数则列出 open Issues 供选择
 ```
 
-## Usage
-
-### 1. Feature Development (Design → Execute)
+### 先设计，再实现
 
 ```bash
-# Step 1: Design - Generate design doc through Q&A dialogue
-/feature-analyzer user login with OAuth2 support
+# 第一步：通过对话生成设计文档
+/feature-analyzer 用户登录功能，支持 OAuth2 和微信扫码
 
-# Step 2: Execute - Implement tasks from design doc
+# 第二步：按文档逐项实现
 /feature-pipeline docs/features/user-login.md
 ```
 
-### 2. Quick Development
+### 快速开发
 
 ```bash
-/feature-dev add dark mode toggle
+/feature-dev 给设置页添加深色模式切换
 ```
 
-### 3. Issue-Driven Development
+### 从截图生成任务
 
 ```bash
-/issue-flow #123                              # Implement a GitHub Issue end-to-end
-/issue-flow https://github.com/org/repo/issues/123  # URL format
-/issue-flow                                   # Pick from open issues
+/screenshot-analyzer ./competitor-app.png    # 分析截图，提取功能清单和开发任务
 ```
 
-### 4. Screenshot Analysis
+## Skills 一览
 
-```bash
-/screenshot-analyzer ./app.png  # Extract features from screenshot
-```
+### 研发类 (`skills/dev/`)
 
-## Components
+| Skill | 说明 |
+|-------|------|
+| `issue-flow` | Issue 驱动开发 —— 从 GitHub Issue 出发，自动完成方案设计、团队协作、PR 创建到合并的完整流程 |
+| `feature-dev` | 引导式功能开发 —— 深度理解代码库，经过探索→设计→实现→测试→评审的完整周期 |
+| `feature-analyzer` | 需求分析 —— 通过交互式对话，将模糊想法转化为结构化的设计文档 |
+| `feature-pipeline` | 任务执行引擎 —— 读取设计文档，逐项实现，支持断点续做 |
+| `screenshot-analyzer` | 截图分析 —— 从 UI 截图中识别功能特性，生成开发任务清单 |
 
-### Development Skills (`skills/dev/`)
+### 视频动画类 (`skills/video/`)
 
-| Skill | Description |
-|-------|-------------|
-| `feature-dev` | Guided feature development with codebase understanding and architecture focus |
-| `feature-analyzer` | Turn ideas into designs through Q&A dialogue |
-| `feature-pipeline` | Execute tasks from design documents |
-| `screenshot-analyzer` | Extract features from UI screenshots |
-| `issue-flow` | AI-native Issue-driven development: Issue → Plan → Team Execute → PR → Merge |
+| Skill | 说明 |
+|-------|------|
+| `video-producer` | 视频制作 —— 从自然语言描述到完整 Remotion 视频，包含叙事、编排和渲染 |
+| `gsap-animation` | GSAP 动效 —— 时间线编排、文字拆分、SVG 形变等高级动画 |
+| `spring-animation` | 弹簧动画 —— 基于物理的弹性入场、轨迹、编排序列 |
+| `react-animation` | React 动效 —— ReactBits 精选视觉效果，适配 Remotion 视频制作 |
 
-### Video & Animation Skills (`skills/video/`)
+### 工具类 (`skills/utils/`)
 
-| Skill | Description |
-|-------|-------------|
-| `video-producer` | End-to-end Remotion video production from natural language briefs - narrative structure, scene orchestration, rendering |
-| `gsap-animation` | GSAP + Remotion motion graphics - timeline orchestration, text splitting, SVG morphing |
-| `spring-animation` | Remotion spring physics for motion graphics - bouncy entrances, elastic trails, orchestrated sequences |
-| `react-animation` | ReactBits animations for Remotion - curated visual effects for video production |
+| Skill | 说明 |
+|-------|------|
+| `tts-skill` | 语音合成 —— MiniMax TTS API，支持文本转语音、声音克隆、声音设计 |
+| `cover-image` | 封面生成 —— 根据内容自动生成文章封面图 |
+| `skill-creation-guide` | Skill 开发指南 —— 创建自定义 Skill 的完整教程 |
 
-### Utility Skills (`skills/utils/`)
-
-| Skill | Description |
-|-------|-------------|
-| `tts-skill` | MiniMax TTS API - text-to-speech, voice clone, voice design |
-| `cover-image` | Cover image generation |
-| `skill-creation-guide` | Guide for creating new skills |
-
-## Project Structure
+## 项目结构
 
 ```
 happy-skills/
-├── package.json                 # NPM package manifest & skills configuration
-├── skills/                      # Skills
-│   ├── dev/                     # Development skills
-│   ├── video/                   # Video & animation skills
-│   └── utils/                   # Utility skills
-└── docs/                        # Documentation
+├── package.json          # 包配置 & Skills 注册
+├── skills/
+│   ├── dev/              # 研发类
+│   ├── video/            # 视频动画类
+│   └── utils/            # 工具类
+└── docs/                 # 文档
 ```
 
 ## License
