@@ -52,7 +52,7 @@ happy-skills/
 
 ## Rules
 
-- When updating skills, sync to both `README.md` and `README_CN.md`
+- When updating skills, sync to both `README.md`(中文) and `README_EN.md`(English)
 - Always update both README files together to keep them in sync
 - Use AskUserQuestion for structured information gathering in skills
 - Skills can be called directly: `/feature-dev`, `/feature-analyzer`, `/feature-pipeline`, `/screenshot-analyzer`, `/tts-skill`, `/video-producer`, `/issue-flow`
