@@ -2,6 +2,10 @@
 
 **中文** | [English](./README_EN.md)
 
+<p align="center">
+  <img src="./happy-skills.png" alt="Happy Skills" width="600" />
+</p>
+
 一组为 [Claude Code](https://docs.anthropic.com/en/docs/claude-code) 打造的 Skills，覆盖从需求分析到代码交付的完整研发流程。用一句自然语言启动，AI 自动完成探索、设计、实现、测试和提交。
 
 ## 安装

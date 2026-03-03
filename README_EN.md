@@ -2,6 +2,10 @@
 
 [中文](./README.md) | **English**
 
+<p align="center">
+  <img src="./happy-skills.png" alt="Happy Skills" width="600" />
+</p>
+
 A collection of Skills for [Claude Code](https://docs.anthropic.com/en/docs/claude-code) that cover the full development lifecycle — from requirements to shipped code. Describe what you need in plain language, and AI handles exploration, design, implementation, testing, and delivery.
 
 ## Installation
