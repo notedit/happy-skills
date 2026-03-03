@@ -20,43 +20,47 @@
     "skills": [
       {
         "name": "feature-dev",
-        "path": "./skills/feature-dev"
+        "path": "./skills/dev/feature-dev"
       },
       {
         "name": "feature-analyzer",
-        "path": "./skills/feature-analyzer"
+        "path": "./skills/dev/feature-analyzer"
       },
       {
         "name": "feature-pipeline",
-        "path": "./skills/feature-pipeline"
+        "path": "./skills/dev/feature-pipeline"
       },
       {
         "name": "screenshot-analyzer",
-        "path": "./skills/screenshot-analyzer"
+        "path": "./skills/dev/screenshot-analyzer"
       },
       {
-        "name": "skill-creation-guide",
-        "path": "./skills/skill-creation-guide"
-      },
-      {
-        "name": "tts-skill",
-        "path": "./skills/tts-skill"
-      },
-      {
-        "name": "react-animation",
-        "path": "./skills/react-animation"
-      },
-      {
-        "name": "gsap-animation",
-        "path": "./skills/gsap-animation"
-      },
-      {
-        "name": "spring-animation",
-        "path": "./skills/spring-animation"
+        "name": "issue-flow",
+        "path": "./skills/dev/issue-flow"
       },
       {
         "name": "video-producer",
-        "path": "./skills/video-producer"
+        "path": "./skills/video/video-producer"
+      },
+      {
+        "name": "gsap-animation",
+        "path": "./skills/video/gsap-animation"
+      },
+      {
+        "name": "spring-animation",
+        "path": "./skills/video/spring-animation"
+      },
+      {
+        "name": "react-animation",
+        "path": "./skills/video/react-animation"
+      },
+      {
+        "name": "tts-skill",
+        "path": "./skills/utils/tts-skill"
+      },
+      {
+        "name": "skill-creation-guide",
+        "path": "./skills/utils/skill-creation-guide"
       }
     ]
   }

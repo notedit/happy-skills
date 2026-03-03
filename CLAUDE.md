@@ -32,15 +32,21 @@
 happy-skills/
 ├── package.json                 # NPM package manifest & skills configuration
 ├── skills/                      # Skills (direct invocation)
-│   ├── feature-dev/             # Guided feature development
-│   ├── feature-analyzer/        # Design doc generation
-│   ├── feature-pipeline/        # Task execution engine
-│   ├── screenshot-analyzer/     # Screenshot analysis
-│   ├── skill-creation-guide/    # Skill creation guide
-│   ├── tts-skill/               # MiniMax TTS API
-│   ├── react-animation/         # ReactBits animations for Remotion
-│   ├── gsap-animation/          # GSAP + Remotion motion graphics
-│   └── video-producer/          # End-to-end video production
+│   ├── dev/                     # Development skills
+│   │   ├── feature-dev/         # Guided feature development
+│   │   ├── feature-analyzer/    # Design doc generation
+│   │   ├── feature-pipeline/    # Task execution engine
+│   │   ├── screenshot-analyzer/ # Screenshot analysis
+│   │   └── issue-flow/          # Issue-driven development workflow
+│   ├── video/                   # Video & animation skills
+│   │   ├── video-producer/      # End-to-end video production
+│   │   ├── gsap-animation/      # GSAP + Remotion motion graphics
+│   │   ├── spring-animation/    # Remotion spring physics animations
+│   │   └── react-animation/     # ReactBits animations for Remotion
+│   └── utils/                   # Utility skills
+│       ├── tts-skill/           # MiniMax TTS API
+│       ├── cover-image/         # Cover image generation
+│       └── skill-creation-guide/# Skill creation guide
 └── docs/                        # Documentation
 ```
 
@@ -49,4 +55,4 @@ happy-skills/
 - When updating skills, sync to both `README.md` and `README_CN.md`
 - Always update both README files together to keep them in sync
 - Use AskUserQuestion for structured information gathering in skills
-- Skills can be called directly: `/feature-dev`, `/feature-analyzer`, `/feature-pipeline`, `/screenshot-analyzer`, `/tts-skill`, `/video-producer`
+- Skills can be called directly: `/feature-dev`, `/feature-analyzer`, `/feature-pipeline`, `/screenshot-analyzer`, `/tts-skill`, `/video-producer`, `/issue-flow`

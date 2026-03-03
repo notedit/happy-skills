@@ -49,7 +49,15 @@ npx skills add notedit/happy-skills -g
 /feature-dev add dark mode toggle
 ```
 
-### 3. Screenshot Analysis
+### 3. Issue-Driven Development
+
+```bash
+/issue-flow #123                              # Implement a GitHub Issue end-to-end
+/issue-flow https://github.com/org/repo/issues/123  # URL format
+/issue-flow                                   # Pick from open issues
+```
+
+### 4. Screenshot Analysis
 
 ```bash
 /screenshot-analyzer ./app.png  # Extract features from screenshot
@@ -57,7 +65,7 @@ npx skills add notedit/happy-skills -g
 
 ## Components
 
-### Skills
+### Development Skills (`skills/dev/`)
 
 | Skill | Description |
 |-------|-------------|
@@ -65,11 +73,24 @@ npx skills add notedit/happy-skills -g
 | `feature-analyzer` | Turn ideas into designs through Q&A dialogue |
 | `feature-pipeline` | Execute tasks from design documents |
 | `screenshot-analyzer` | Extract features from UI screenshots |
-| `skill-creation-guide` | Guide for creating new skills |
-| `tts-skill` | MiniMax TTS API - text-to-speech, voice clone, voice design |
-| `react-animation` | ReactBits animations for Remotion - curated visual effects for video production |
-| `gsap-animation` | GSAP + Remotion motion graphics - timeline orchestration, text splitting, SVG morphing |
+| `issue-flow` | AI-native Issue-driven development: Issue → Plan → Team Execute → PR → Merge |
+
+### Video & Animation Skills (`skills/video/`)
+
+| Skill | Description |
+|-------|-------------|
 | `video-producer` | End-to-end Remotion video production from natural language briefs - narrative structure, scene orchestration, rendering |
+| `gsap-animation` | GSAP + Remotion motion graphics - timeline orchestration, text splitting, SVG morphing |
+| `spring-animation` | Remotion spring physics for motion graphics - bouncy entrances, elastic trails, orchestrated sequences |
+| `react-animation` | ReactBits animations for Remotion - curated visual effects for video production |
+
+### Utility Skills (`skills/utils/`)
+
+| Skill | Description |
+|-------|-------------|
+| `tts-skill` | MiniMax TTS API - text-to-speech, voice clone, voice design |
+| `cover-image` | Cover image generation |
+| `skill-creation-guide` | Guide for creating new skills |
 
 ## Project Structure
 
@@ -77,6 +98,9 @@ npx skills add notedit/happy-skills -g
 happy-skills/
 ├── package.json                 # NPM package manifest & skills configuration
 ├── skills/                      # Skills
+│   ├── dev/                     # Development skills
+│   ├── video/                   # Video & animation skills
+│   └── utils/                   # Utility skills
 └── docs/                        # Documentation
 ```
 
